@@ -1,12 +1,12 @@
 # psychopy-cedrus
-Extension package for PsychoPy which adds support for various hardware devices by the [Cedrus Corporation](https://cedrus.com/index.htm).
+Extension package for PsychoPy which adds support for various hardware devices by the 
+[Cedrus Corporation](https://cedrus.com/index.htm).
 
 ## Supported Devices
 
 Installing this package alongside PsychoPy will enable support for the following devices:
 
-* CS-100A Luminance and Color Meter
-* LS-100 and LS-100 Luminance Meters
+* RB730 Response Pads
     
 ## Installing
 
