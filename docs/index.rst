@@ -1,12 +1,12 @@
-.. psychopy-template documentation master file, created by
+.. psychopy-cedrus documentation master file, created by
    sphinx-quickstart on Wed Oct 19 16:27:10 2022.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to psychopy-template's documentation!
+Welcome to psychopy-cedrus's documentation!
 ===========================================
 
-The `psychopy-template` plugin is designed to show you how to make a plugin.
+The `psychopy-cedrus` plugin adds support for various hardware devices by the Cedrus Corporation.
 
 .. toctree::
    :maxdepth: 2
