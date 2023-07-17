@@ -103,15 +103,9 @@ class cedrusButtonBoxComponent(KeyboardComponent):
 
     def writeRunOnceInitCode(self, buff):
         code = ("try:  # to use the Cedrus response box\n"
-                "    import pyxid2 as pyxid\n"
+                "   import pyxid2 as pyxid\n"
                 "except ImportError:\n"
-                "    import pyxid\n"
-                "except OSError as err:\n"
-                "    if 'd2xx' in str(err):\n"
-                "        # importing will raise an OSError if you're missing the D2XX drivers\n"
-                "        raise err from OSError('Cedrus Component needs the D2XX drivers to run. Please install from: https://ftdichip.com/drivers/d2xx-drivers/.')\n"
-                "    else:\n"
-                "        raise err\n"
+                "   import pyxid\n"
                 "cedrusBox_%(deviceNumber)s = None\n"
                 "for n in range(10):  # doesn't always work first time!\n"
                 "    try:\n"
