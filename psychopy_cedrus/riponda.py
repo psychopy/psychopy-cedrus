@@ -5,7 +5,7 @@ import pyxid2
 
 
 class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
-    def __init__(self, pad, channels):
+    def __init__(self, pad, channels=1):
         _requestedPad = pad
         # try to get associated riponda
         if isinstance(_requestedPad, str):
@@ -39,12 +39,13 @@ class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         return devices
 
     def setThreshold(self, threshold, channels=(1, 2)):
+        # store value
         self._threshold = threshold
-        self.parent.setMode(0)
+        # convert from base 16
+        thr = threshold / 255 * 100
+        # send commands
         for n in channels:
-            self.parent.sendMessage(f"AAO{n} {threshold}")
-            self.parent.pause()
-        self.parent.setMode(3)
+            self.parent.xid.con.send_xid_command(f"it{n}{thr}")
 
     def resetTimer(self, clock=logging.defaultClock):
         self.parent.resetTimer(clock=clock)
@@ -61,44 +62,12 @@ class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         self.parent.dispatchMessages()
 
     def parseMessage(self, message):
-        # if given a string, split according to regex
-        if isinstance(message, str):
-            message = splitRipondaMessage(message)
-        # split into variables
-        # assert isinstance(message, (tuple, list)) and len(message) == 4
-        device, state, channel, time = message
-        # convert state to bool
-        if state == "P":
-            state = True
-        elif state == "R":
-            state = False
-        # # validate
-        # assert channel == "C", (
-        #     "RipondaPhotometer {} received non-photometer message: {}"
-        # ).format(self.number, message)
-        # assert number == str(self.number), (
-        #     "RipondaPhotometer {} received message intended for photometer {}: {}"
-        # ).format(self.number, number, message)
         # create PhotodiodeResponse object
         resp = photodiode.PhotodiodeResponse(
-            time, channel, state, threshold=self.getThreshold()
+            t=message['time'], channel=message['key'], value=message['pressed'], threshold=self.getThreshold()
         )
 
         return resp
-
-    def findPhotodiode(self, win, channel):
-        # set mode to 3
-        self.parent.setMode(3)
-        self.parent.pause()
-        # continue as normal
-        return photodiode.BasePhotodiodeGroup.findPhotodiode(self, win, channel)
-
-    def findThreshold(self, win, channel):
-        # set mode to 3
-        self.parent.setMode(3)
-        self.parent.pause()
-        # continue as normal
-        return photodiode.BasePhotodiodeGroup.findThreshold(self, win, channel)
 
 
 class RipondaButtonGroup(button.BaseButtonGroup):
