@@ -198,6 +198,6 @@ class Riponda(base.BaseDevice):
 
     def resetTimer(self, clock=logging.defaultClock):
         # send reset command
-        self.xid.reset_rt_timer()
+        self.xid.reset_timer()
         # store time
         self._lastTimerReset = clock.getTime(format=float)
