@@ -18,7 +18,7 @@ class RipondaButtonBoxBackend(ButtonBoxBackend, key="riponda", label="Cedrus Rip
         params = {}
         params['ripondaIndex'] = Param(
             0, valType='int', inputType="single", categ='Device',
-            label=_translate("Baud rate"),
+            label=_translate("Device number"),
             hint=_translate(
                 "Device number, if you have multiple devices which one do you want (0, 1, 2...)"
             )
@@ -30,13 +30,16 @@ class RipondaButtonBoxBackend(ButtonBoxBackend, key="riponda", label="Cedrus Rip
             importName="riponda", importFrom="psychopy_cedrus"
         )
 
-    def writeInitCode(self: ButtonBoxComponent, buff):
+    def writeDeviceCode(self, buff):
         # get inits
         inits = getInitVals(self.params)
-        # make Keyboard object
+        # make ButtonGroup object
         code = (
-            "%(name)s = riponda.RipondaButtonGroup(\n"
-            "    pad=%(ripondaIndex)s\n"
+            "deviceManager.addDevice(\n"
+            "    deviceClass='psychopy_cedrus.riponda.RipondaButtonGroup',\n"
+            "    deviceName=%(deviceName)s,\n"
+            "    pad=%(ripondaIndex)s,\n"
+            "    channels=%(nButtons)s\n"
             ")\n"
         )
-        buff.writeIndentedLines(code % inits)
+        buff.writeOnceIndentedLines(code % inits)
