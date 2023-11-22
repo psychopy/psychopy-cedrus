@@ -109,6 +109,9 @@ class RipondaButtonGroup(button.BaseButtonGroup):
 
         return resp
 
+    def resetTimer(self, clock=logging.defaultClock):
+        self.parent.resetTimer(clock=clock)
+
     @staticmethod
     def getAvailableDevices():
         devices = []
@@ -183,7 +186,6 @@ class Riponda(base.BaseDevice):
             time = float(resp['time']) / 1000 + self._lastTimerReset
             # store message
             self.messages[time] = resp
-            print(resp)
             # choose object to dispatch to
             for node in self.nodes:
                 # if device is 0, dispatch only to buttons
