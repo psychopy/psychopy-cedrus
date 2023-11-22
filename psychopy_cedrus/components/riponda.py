@@ -23,7 +23,10 @@ class RipondaButtonBoxBackend(ButtonBoxBackend, key="riponda", label="Cedrus Rip
                 "Device number, if you have multiple devices which one do you want (0, 1, 2...)"
             )
         )
-        return params, order
+        # define depends
+        depends = []
+
+        return params, order, depends
 
     def addRequirements(self: ButtonBoxComponent):
         self.exp.requireImport(
