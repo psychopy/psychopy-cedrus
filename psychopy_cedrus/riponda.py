@@ -133,6 +133,9 @@ class Riponda(base.BaseDevice):
     def __init__(
             self, index=0
     ):
+        # give error if no device connected
+        if not len(self.getAvailableDevices()):
+            raise ConnectionError("No Cedrus Riponda response pad is connected.")
         # get xid device
         self.xid = pyxid2.get_xid_device(index)
         # nodes
