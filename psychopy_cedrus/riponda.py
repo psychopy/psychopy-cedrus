@@ -183,9 +183,9 @@ class Riponda(base.BaseDevice):
             # get response
             resp = self.xid.get_next_response()
             # get time in s using defaultClock units
-            time = float(resp['time']) / 1000 + self._lastTimerReset
+            resp['time'] = float(resp['time']) / 1000 + self._lastTimerReset
             # store message
-            self.messages[time] = resp
+            self.messages[resp['time']] = resp
             # choose object to dispatch to
             for node in self.nodes:
                 # if device is 0, dispatch only to buttons
