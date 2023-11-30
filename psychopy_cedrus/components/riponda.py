@@ -1,13 +1,17 @@
-from psychopy.experiment.components.buttonBox import ButtonBoxBackend, ButtonBoxComponent
+from psychopy.experiment.components.buttonBox import ButtonBoxComponent
 from psychopy.experiment import getInitVals, Param
+from psychopy.experiment.plugins import DeviceBackend
 from psychopy.localization import _translate
 
 
-class RipondaButtonBoxBackend(ButtonBoxBackend, key="riponda", label="Cedrus Riponda"):
+class RipondaButtonBoxBackend(DeviceBackend):
     """
     Adds a basic serial connection backend for ButtonBoxComponent, as well as acting as an example for implementing
     other ButtonBoxBackends.
     """
+    key = "riponda"
+    label = "Cedrus Riponda"
+    component = ButtonBoxComponent
 
     def getParams(self: ButtonBoxComponent):
         # define order
@@ -48,7 +52,7 @@ class RipondaButtonBoxBackend(ButtonBoxBackend, key="riponda", label="Cedrus Rip
             "    deviceClass='psychopy_cedrus.riponda.RipondaButtonGroup',\n"
             "    deviceName=%(deviceName)s,\n"
             "    pad=%(ripondaIndex)s,\n"
-            "    channels=%(nButtons)s\n"
+            "    channels=%(ripondaNButtons)s\n"
             ")\n"
         )
         buff.writeOnceIndentedLines(code % inits)
