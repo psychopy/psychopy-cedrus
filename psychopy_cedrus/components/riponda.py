@@ -50,7 +50,7 @@ class RipondaButtonBoxBackend(DeviceBackend):
         code = (
             "deviceManager.addDevice(\n"
             "    deviceClass='psychopy_cedrus.riponda.RipondaButtonGroup',\n"
-            "    deviceName=%(deviceName)s,\n"
+            "    deviceName=%(deviceLabel)s,\n"
             "    pad=%(ripondaIndex)s,\n"
             "    channels=%(ripondaNButtons)s\n"
             ")\n"
