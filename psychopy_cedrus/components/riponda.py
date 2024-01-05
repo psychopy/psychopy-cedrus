@@ -12,6 +12,7 @@ class RipondaButtonBoxBackend(DeviceBackend):
     key = "riponda"
     label = "Cedrus Riponda"
     component = ButtonBoxComponent
+    deviceClasses = ["psychopy_cedrus.riponda.RipondaButtonGroup"]
 
     def getParams(self: ButtonBoxComponent):
         # define order
