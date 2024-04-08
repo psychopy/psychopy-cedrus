@@ -36,3 +36,6 @@ where = ["",]
 [project.entry-points."psychopy.experiment.components"]
 cedrusButtonBoxComponent = "psychopy_cedrus:cedrusButtonBoxComponent"
 RipondaButtonBoxBackend = "psychopy_cedrus.components.riponda:RipondaButtonBoxBackend"
+
+[project.entry-points."psychopy.hardware.cedrus"]
+RB730 = "psychopy_cedrus.cedrus:RB730"
