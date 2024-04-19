@@ -12,3 +12,5 @@ from psychopy.hardware.cedrus import RipondaVoicekey
 
 .. autoclass:: psychopy_cedrus.riponda.RipondaVoicekey
     :members:
+    :undoc-members:
+    :inherited-members:

@@ -12,3 +12,5 @@ from psychopy.hardware.cedrus import Riponda
 
 .. autoclass:: psychopy_cedrus.riponda.Riponda
     :members:
+    :undoc-members:
+    :inherited-members:

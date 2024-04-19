@@ -12,3 +12,5 @@ from psychopy.hardware.cedrus import RipondaPhotodiodeGroup
 
 .. autoclass:: psychopy_cedrus.riponda.RipondaPhotodiodeGroup
     :members:
+    :undoc-members:
+    :inherited-members:
