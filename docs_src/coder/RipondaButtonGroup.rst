@@ -12,3 +12,5 @@ from psychopy.hardware.cedrus import RipondaButtonGroup
 
 .. autoclass:: psychopy_cedrus.riponda.RipondaButtonGroup
     :members:
+    :undoc-members:
+    :inherited-members:

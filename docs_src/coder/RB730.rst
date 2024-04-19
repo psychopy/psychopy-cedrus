@@ -12,3 +12,5 @@ from psychopy.hardware.cedrus import RB730
 
 .. autoclass:: psychopy_cedrus.cedrus.RB730
     :members:
+    :undoc-members:
+    :inherited-members:
