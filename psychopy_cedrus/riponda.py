@@ -24,6 +24,31 @@ class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         photodiode.BasePhotodiodeGroup.__init__(self, channels=channels)
         self.parent = pad
 
+    def isSameDevice(self, other):
+        """
+        Determine whether this object represents the same physical device as a given other
+        object.
+
+        Parameters
+        ----------
+        other : RipondaPhotodiodeGroup, dict
+            Other RipondaPhotodiodeGroup to compare against, or a dict of params (which must include
+            `index` as a key)
+
+        Returns
+        -------
+        bool
+            True if the two objects represent the same physical device
+        """
+        if isinstance(other, type(self)):
+            # if given another RipondaPhotodiodeGroup, compare parent boxes
+            other = other.parent
+        elif isinstance(other, dict) and "pad" in other:
+            # if given a dict, make sure we have a `port` rather than a `pad`
+            other['port'] = other['pad']
+        # use parent's comparison method
+        return self.parent.isSameDevice(other)
+
     @staticmethod
     def getAvailableDevices():
         devices = []
@@ -91,6 +116,31 @@ class RipondaButtonGroup(button.BaseButtonGroup):
         button.BaseButtonGroup.__init__(self, channels=channels)
         self.parent = pad
 
+    def isSameDevice(self, other):
+        """
+        Determine whether this object represents the same physical device as a given other
+        object.
+
+        Parameters
+        ----------
+        other : RipondaButtonGroup, dict
+            Other RipondaButtonGroup to compare against, or a dict of params (which must include
+            `index` as a key)
+
+        Returns
+        -------
+        bool
+            True if the two objects represent the same physical device
+        """
+        if isinstance(other, type(self)):
+            # if given another RipondaButtonGroup, compare parent boxes
+            other = other.parent
+        elif isinstance(other, dict) and "pad" in other:
+            # if given a dict, make sure we have a `port` rather than a `pad`
+            other['port'] = other['pad']
+        # use parent's comparison method
+        return self.parent.isSameDevice(other)
+
     def dispatchMessages(self):
         """
         Dispatch messages from parent Riponda to this button group
@@ -108,6 +158,9 @@ class RipondaButtonGroup(button.BaseButtonGroup):
         )
 
         return resp
+
+    def resetTimer(self, clock=logging.defaultClock):
+        self.parent.resetTimer(clock=clock)
 
     @staticmethod
     def getAvailableDevices():
@@ -133,7 +186,11 @@ class Riponda(base.BaseDevice):
     def __init__(
             self, index=0
     ):
+        # give error if no device connected
+        if not len(self.getAvailableDevices()):
+            raise ConnectionError("No Cedrus Riponda response pad is connected.")
         # get xid device
+        self.index = index
         self.xid = pyxid2.get_xid_device(index)
         # nodes
         self.nodes = []
@@ -142,6 +199,34 @@ class Riponda(base.BaseDevice):
         # reset timer
         self._lastTimerReset = None
         self.resetTimer()
+
+    def isSameDevice(self, other):
+        """
+        Determine whether this object represents the same physical button box as a given other
+        object.
+
+        Parameters
+        ----------
+        other : Riponda, dict
+            Other Riponda to compare against, or a dict of params (which much include
+            `index` as a key)
+
+        Returns
+        -------
+        bool
+            True if the two objects represent the same physical device
+        """
+        if isinstance(other, type(self)):
+            # if given another object, get index
+            index = other.index
+        elif isinstance(other, dict) and "index" in other:
+            # if given a dict, get index from key
+            index = other['index']
+        else:
+            # if the other object is the wrong type or doesn't have an index, it's not this
+            return False
+
+        return self.index == index
 
     @staticmethod
     def getAvailableDevices():
@@ -177,10 +262,9 @@ class Riponda(base.BaseDevice):
             # get response
             resp = self.xid.get_next_response()
             # get time in s using defaultClock units
-            time = float(resp['time']) / 1000 + self._lastTimerReset
+            resp['time'] = float(resp['time']) / 1000 + self._lastTimerReset
             # store message
-            self.messages[time] = resp
-            print(resp)
+            self.messages[resp['time']] = resp
             # choose object to dispatch to
             for node in self.nodes:
                 # if device is 0, dispatch only to buttons

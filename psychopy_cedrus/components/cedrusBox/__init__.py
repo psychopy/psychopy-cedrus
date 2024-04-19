@@ -10,13 +10,7 @@ from pathlib import Path
 from psychopy.experiment.components import Param, _translate
 from psychopy.experiment.components.keyboard import KeyboardComponent
 from psychopy.experiment import CodeGenerationException, valid_var_re
-from psychopy.localization import _localized as __localized
-_localized = __localized.copy()
 __author__ = 'Jon Peirce'
-
-# only use _localized values for label values, nothing functional:
-_localized.update({'deviceNumber': _translate('Device number'),
-                   'useBoxTimer': _translate("Use box timer")})
 
 
 class cedrusButtonBoxComponent(KeyboardComponent):
@@ -80,7 +74,7 @@ class cedrusButtonBoxComponent(KeyboardComponent):
             deviceNumber, valType='int', inputType="spin", allowedTypes=[], categ='Hardware',
             updates='constant', allowedUpdates=[],
             hint=msg,
-            label=_localized['deviceNumber'])
+            label=_translate('deviceNumber'))
 
         # self.params['getReleaseTime'] = Param(getReleaseTime,
         #    valType='bool', allowedVals=[True, False],
@@ -95,7 +89,7 @@ class cedrusButtonBoxComponent(KeyboardComponent):
             getReleaseTime, valType='bool', inputType="bool", allowedVals=[True, False], categ='Hardware',
             updates='constant', allowedUpdates=[],
             hint=msg,
-            label=_localized['useBoxTimer'])
+            label=_translate('useBoxTimer'))
 
     def writeRunOnceInitCode(self, buff):
         code = ("try:  # to use the Cedrus response box\n"

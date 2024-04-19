@@ -1,0 +1,14 @@
+RB730
+-------------------------------
+
+To import RB730, you can either use:
+```python
+from psychopy_cedrus.cedrus import RB730
+```
+or, any time after `psychopy.plugins.activatePlugins` has been called:
+```python
+from psychopy.hardware.cedrus import RB730
+```
+
+.. autoclass:: psychopy_cedrus.cedrus.RB730
+    :members:
