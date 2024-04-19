@@ -24,8 +24,21 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: Implementation :: CPython",
 ]
-urls.homepage = "https://github.com/mdcutone/psychopy-cedrus"
-urls.changelog = "https://github.com/mdcutone/psychopy-cedrus/blob/main/CHANGELOG.txt"
+urls.homepage = "https://psychopy.github.io/psychopy-cedrus"
+urls.changelog = "https://github.com/psychopy/psychopy-cedrus/blob/main/CHANGELOG.txt"
+
+[project.optional-dependencies]
+# dependencies for building the docs
+docs = [
+  "psychopy",
+  "sphinx",
+  "furo",
+]
+# dependencies for running the test suite
+tests = [
+  "psychopy @ git+https://github.com/psychopy/psychopy@release",
+  "pytest",
+]
 
 [tool.setuptools.packages.find]
 where = ["",]
@@ -34,8 +47,12 @@ where = ["",]
 "*" = ["*.png",]
 
 [project.entry-points."psychopy.experiment.components"]
-cedrusButtonBoxComponent = "psychopy_cedrus:cedrusButtonBoxComponent"
+cedrusButtonBoxComponent = "psychopy_cedrus.components.cedrusBox:cedrusButtonBoxComponent"
 RipondaButtonBoxBackend = "psychopy_cedrus.components.riponda:RipondaButtonBoxBackend"
 
 [project.entry-points."psychopy.hardware.cedrus"]
 RB730 = "psychopy_cedrus.cedrus:RB730"
+Riponda = "psychopy_cedrus.riponda:Riponda"
+RipondaPhotodiodeGroup = "psychopy_cedrus.riponda:RipondaPhotodiodeGroup"
+RipondaButtonGroup = "psychopy_cedrus.riponda:RipondaButtonGroup"
+RipondaVoicekey = "psychopy_cedrus.riponda:RipondaVoicekey"

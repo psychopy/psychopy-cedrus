@@ -8,4 +8,3 @@
 __version__ = '0.0.1'
 
 from .cedrus import RB730
-from .cedrusBox import cedrusButtonBoxComponent  # plugin component for Builder
