@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "psychopy-cedrus"
-version = "0.0.3"
+version = "0.0.4"
 description = "Extension package for PsychoPy which adds support for various hardware devices by the Cedrus Corporation."
 readme = "README.md"
 requires-python = ">= 3.7"
@@ -12,6 +12,7 @@ license = { text = "GNU General Public License v3 (GPLv3)" }
 authors = [
   { name = "Jon Peirce", email = "jon@opensceincetools.org" },
   { name = "Matthew Cutone", email = "mcutone@opensceincetools.org" },
+  { name = "Todd Parsons", email = "todd@opensceincetools.org" },
 ]
 classifiers = [
   "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
