@@ -50,7 +50,7 @@ class CedrusButtonBoxComponent(KeyboardComponent):
                  startType='time (s)', startVal=0.0,
                  stopType='duration (s)', stopVal=1.0,
                  startEstim='', durationEstim='',):
-        super(cedrusButtonBoxComponent, self).__init__(
+        super(CedrusButtonBoxComponent, self).__init__(
             exp, parentName, name=name,
             allowedKeys=allowedKeys, store=store, discardPrev=discardPrev,
             forceEndRoutine=forceEndRoutine, storeCorrect=storeCorrect,
