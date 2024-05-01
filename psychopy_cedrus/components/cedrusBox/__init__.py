@@ -13,7 +13,7 @@ from psychopy.experiment import CodeGenerationException, valid_var_re
 __author__ = 'Jon Peirce'
 
 
-class cedrusButtonBoxComponent(KeyboardComponent):
+class CedrusButtonBoxComponent(KeyboardComponent):
     """
     DEPRECATED
     ----------
