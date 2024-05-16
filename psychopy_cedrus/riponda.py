@@ -63,14 +63,19 @@ class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
 
         return devices
 
-    def setThreshold(self, threshold, channels=(1, 2)):
+    def _setThreshold(self, threshold, channel=0):
+        if threshold is None:
+            return
         # store value
         self._threshold = threshold
         # convert from base 16
         thr = threshold / 255 * 100
-        # send commands
-        for n in channels:
-            self.parent.xid.con.send_xid_command(f"it{n}{thr}")
+        # send command
+        self.parent.xid.con.send_xid_command(f"it{channel}{thr}")
+        # dispatch
+        self.dispatchMessages()
+        # return True/False according to state
+        return self.getState(channel)
 
     def resetTimer(self, clock=logging.defaultClock):
         self.parent.resetTimer(clock=clock)
