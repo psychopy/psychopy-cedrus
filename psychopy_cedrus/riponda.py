@@ -204,7 +204,7 @@ class Riponda(base.BaseDevice):
                 return pad
         # try to get by index
         if isinstance(requested, int):
-            pad = DeviceManager.getDeviceBy("index", requested)
+            pad = DeviceManager.getDeviceBy("index", requested, deviceClass="psychopy_cedrus.riponda.Riponda")
             # if found, return
             if pad is not None:
                 return pad
@@ -212,7 +212,7 @@ class Riponda(base.BaseDevice):
         if requested is None or isinstance(requested, int):
             return DeviceManager.addDevice(
                 deviceClass="psychopy_cedrus.riponda.Riponda",
-                deviceName=f"Riponda{requested}",
+                deviceName=f"Riponda@{requested}",
                 index=requested
             )
         # if still not found, raise error
