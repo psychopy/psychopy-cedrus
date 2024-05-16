@@ -1,33 +1,17 @@
 from psychopy.hardware import base, photodiode, button
-from psychopy.hardware.manager import deviceManager, DeviceManager
+from psychopy.hardware.manager import deviceManager, DeviceManager, ManagedDeviceError
 from psychopy import logging, layout
 import pyxid2
 
 
 class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
     def __init__(self, pad, channels=1):
-        _requestedPad = pad
-        # try to get associated riponda
-        if isinstance(_requestedPad, str):
-            # try getting by name
-            pad = DeviceManager.getDevice(pad)
-        # try getting by index
-        if isinstance(_requestedPad, int):
-            found = DeviceManager.getDeviceBy("index", _requestedPad)
-            if found:
-                pad = found
-        # if still failed, make one
-        if pad is None or isinstance(pad, int):
-            pad = DeviceManager.addDevice(
-                deviceClass="psychopy_cedrus.riponda.Riponda",
-                deviceName=_requestedPad,
-                index=_requestedPad
-            )
-        # reference self in pad
-        pad.nodes.append(self)
+        # get parent
+        self.parent = Riponda.resolve(pad)
+        # reference self in parent
+        self.parent.nodes.append(self)
         # initialise base class
         photodiode.BasePhotodiodeGroup.__init__(self, channels=channels)
-        self.parent = pad
 
     def isSameDevice(self, other):
         """
@@ -107,29 +91,12 @@ class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
 
 class RipondaButtonGroup(button.BaseButtonGroup):
     def __init__(self, pad=0, channels=7):
-        _requestedPad = pad
-        # try to get associated riponda
-        if isinstance(_requestedPad, str):
-            # try getting by name
-            pad = DeviceManager.getDevice(pad)
-        # try getting by index
-        if isinstance(_requestedPad, int):
-            found = DeviceManager.getDeviceBy("index", _requestedPad)
-            if found:
-                pad = found
-        # if still failed, make one
-        if pad is None or isinstance(pad, int):
-            pad = DeviceManager.addDevice(
-                deviceClass="psychopy_cedrus.riponda.Riponda",
-                deviceName=_requestedPad,
-                index=_requestedPad
-            )
-
-        # reference self in pad
-        pad.nodes.append(self)
+        # get parent
+        self.parent = Riponda.resolve(pad)
+        # reference self in parent
+        self.parent.nodes.append(self)
         # initialise base class
         button.BaseButtonGroup.__init__(self, channels=channels)
-        self.parent = pad
 
     def isSameDevice(self, other):
         """
@@ -214,6 +181,42 @@ class Riponda(base.BaseDevice):
         # reset timer
         self._lastTimerReset = None
         self.resetTimer()
+    
+    @classmethod
+    def resolve(cls, requested):
+        """
+        Take a value given to a device which has a Riponda as its parent and, from it, 
+        find/make the associated Riponda object.
+
+        Parameters
+        ----------
+        requested : str, int or Riponda
+            Value to resolve
+        """
+        # if requested is already a handle, return as is
+        if isinstance(requested, cls):
+            return requested
+        # try to get by name
+        if isinstance(requested, str):
+            pad = DeviceManager.getDevice(requested)
+            # if found, return
+            if pad is not None:
+                return pad
+        # try to get by index
+        if isinstance(requested, int):
+            pad = DeviceManager.getDeviceBy("index", requested)
+            # if found, return
+            if pad is not None:
+                return pad
+        # if given an index of a not-yet setup device, set one up
+        if requested is None or isinstance(requested, int):
+            return DeviceManager.addDevice(
+                deviceClass="psychopy_cedrus.riponda.Riponda",
+                deviceName=f"Riponda{requested}",
+                index=requested
+            )
+        # if still not found, raise error
+        raise ManagedDeviceError(f"Could not find/create any Riponda object from the value {requested}")
 
     def isSameDevice(self, other):
         """
