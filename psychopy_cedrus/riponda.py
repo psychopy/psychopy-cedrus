@@ -11,6 +11,11 @@ class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         if isinstance(_requestedPad, str):
             # try getting by name
             pad = DeviceManager.getDevice(pad)
+        # try getting by index
+        if isinstance(_requestedPad, int):
+            found = DeviceManager.getDeviceBy("index", _requestedPad)
+            if found:
+                pad = found
         # if still failed, make one
         if pad is None or isinstance(pad, int):
             pad = DeviceManager.addDevice(
@@ -107,6 +112,11 @@ class RipondaButtonGroup(button.BaseButtonGroup):
         if isinstance(_requestedPad, str):
             # try getting by name
             pad = DeviceManager.getDevice(pad)
+        # try getting by index
+        if isinstance(_requestedPad, int):
+            found = DeviceManager.getDeviceBy("index", _requestedPad)
+            if found:
+                pad = found
         # if still failed, make one
         if pad is None or isinstance(pad, int):
             pad = DeviceManager.addDevice(
