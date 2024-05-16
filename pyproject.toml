@@ -48,7 +48,7 @@ where = ["",]
 "*" = ["*.png",]
 
 [project.entry-points."psychopy.experiment.components"]
-CedrusButtonBoxComponent = "psychopy_cedrus.components.cedrusBox:cedrusButtonBoxComponent"
+CedrusButtonBoxComponent = "psychopy_cedrus.components.cedrusBox:CedrusButtonBoxComponent"
 RipondaButtonBoxBackend = "psychopy_cedrus.components.riponda:RipondaButtonBoxBackend"
 
 [project.entry-points."psychopy.hardware.cedrus"]
