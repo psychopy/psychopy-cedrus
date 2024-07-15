@@ -29,7 +29,7 @@ class RipondaButtonBoxBackend(DeviceBackend):
                 "Device number, if you have multiple devices which one do you want (0, 1, 2...)"
             )
         )
-        self.params['ripondaNButtons'] = Param(
+        params['ripondaNButtons'] = Param(
             7, valType="code", inputType="single", categ="Device",
             label=_translate("Num. buttons"),
             hint=_translate(
