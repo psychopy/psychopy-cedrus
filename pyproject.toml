@@ -48,11 +48,19 @@ where = ["",]
 "*" = ["*.png",]
 
 [project.entry-points."psychopy.experiment.components"]
+# old Component
 CedrusButtonBoxComponent = "psychopy_cedrus.components.cedrusBox:CedrusButtonBoxComponent"
+# new backends
 RipondaButtonBoxBackend = "psychopy_cedrus.components.riponda:RipondaButtonBoxBackend"
+RBButtonBoxBackend = "psychopy_cedrus.components.rb:RBButtonBoxBackend"
 
 [project.entry-points."psychopy.hardware.cedrus"]
-RB730 = "psychopy_cedrus.cedrus:RB730"
+# RB series
+RB = "psychopy_cedrus.cedrus:RB"
+RBPhotodiodeGroup = "psychopy_cedrus.riponda:RipondaPhotodiodeGroup"
+RBButtonGroup = "psychopy_cedrus.riponda:RipondaButtonGroup"
+RBVoicekey = "psychopy_cedrus.riponda:RipondaVoicekey"
+# Riponda series
 Riponda = "psychopy_cedrus.riponda:Riponda"
 RipondaPhotodiodeGroup = "psychopy_cedrus.riponda:RipondaPhotodiodeGroup"
 RipondaButtonGroup = "psychopy_cedrus.riponda:RipondaButtonGroup"
