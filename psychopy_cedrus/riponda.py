@@ -1,4 +1,4 @@
-from psychopy.hardware import base, photodiode, button
+from psychopy.hardware import base, photodiode, button, voicekey
 from psychopy.hardware.manager import deviceManager, DeviceManager, ManagedDeviceError
 from psychopy import logging, layout
 import pyxid2
@@ -59,8 +59,10 @@ class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         self._threshold = threshold
         # convert from base 16
         thr = threshold / 255 * 100
+        # get channel selector
+        selector = ["A", "B", "C", "D"][channel]
         # send command
-        self.parent.xid.con.send_xid_command(f"it{channel}{thr}")
+        self.parent.xid.con.send_xid_command(f"it{selector}{thr}")
         # dispatch
         self.dispatchMessages()
         # return True/False according to state
@@ -136,7 +138,7 @@ class RipondaButtonGroup(button.BaseButtonGroup):
 
     def parseMessage(self, message):
         resp = button.ButtonResponse(
-            t=message['time'], channel=message['key'], value=message['pressed']
+            t=message['time'], channel=message['key']-1, value=message['pressed']
         )
 
         return resp
@@ -159,9 +161,63 @@ class RipondaButtonGroup(button.BaseButtonGroup):
         return devices
 
 
-class RipondaVoicekey:
-    def __init__(self, *args, **kwargs):
-        pass
+class RipondaVoicekeyGroup(voicekey.BaseVoiceKeyGroup):
+    def __init__(self, pad=0, channels=1, threshold=None):
+        # get parent
+        self.parent = Riponda.resolve(pad)
+        # reference self in parent
+        self.parent.nodes.append(self)
+        # initialise base class
+        voicekey.BaseVoiceKeyGroup.__init__(self, channels=channels, threshold=threshold)
+    
+    def parseMessage(self, message):
+        resp = voicekey.VoiceKeyResponse(
+            t=message['time'], channel=message['key']-1, value=message['pressed'], 
+            threshold=self._threshold, device=self
+        )
+
+        return resp
+
+    def resetTimer(self, clock=logging.defaultClock):
+        self.parent.resetTimer(clock=clock)
+    
+    def _setThreshold(self, threshold, channel=None):
+        if threshold is None:
+            return
+        # store value
+        self._threshold = threshold
+        # convert from base 16
+        thr = int(threshold / 255 * 100)
+        # send command
+        self.parent.xid.con.send_xid_command(f"itM{thr}")
+        # dispatch
+        self.dispatchMessages()
+        # return True/False according to state
+        return self.getState(channel)
+
+    def isSameDevice(self, other):
+        if isinstance(other, type(self)):
+            # if given another RipondaVoiceKeyGroup, compare parent boxes
+            other = other.parent
+        elif isinstance(other, dict) and "pad" in other:
+            # if given a dict, make sure we have a `port` rather than a `pad`
+            other['port'] = other['pad']
+        # use parent's comparison method
+        return self.parent.isSameDevice(other)
+    
+    @staticmethod
+    def getAvailableDevices():
+        devices = []
+        # iterate through profiles of all serial port devices
+        for profile in Riponda.getAvailableDevices():
+            devices.append({
+                'deviceName': profile['deviceName'] + "_voicekey",
+                'pad': profile['deviceName'],
+                'index': profile['index'],
+                'channels': 1,
+            })
+
+        return devices
 
 
 class Riponda(base.BaseDevice):
@@ -283,6 +339,7 @@ class Riponda(base.BaseDevice):
             resp['time'] = float(resp['time']) / 1000 + self._lastTimerReset
             # store message
             self.messages[resp['time']] = resp
+            print(resp)
             # choose object to dispatch to
             for node in self.nodes:
                 # if device is 0, dispatch only to buttons
@@ -292,7 +349,7 @@ class Riponda(base.BaseDevice):
                 if resp['port'] == 3 and not isinstance(node, RipondaPhotodiodeGroup):
                     continue
                 # if device is 2, dispatch only to voice keys
-                if resp['port'] == 2 and not isinstance(node, RipondaVoicekey):
+                if resp['port'] == 2 and not isinstance(node, RipondaVoicekeyGroup):
                     continue
                 # dispatch to node
                 message = node.parseMessage(resp)
