@@ -10,6 +10,8 @@ class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         self.parent = Riponda.resolve(pad)
         # reference self in parent
         self.parent.nodes.append(self)
+        # # Riponda photodiode should be key 3, but this attribute can be changed if needed
+        self.keys = [3]
         # initialise base class
         photodiode.BasePhotodiodeGroup.__init__(self, channels=channels)
 
@@ -83,9 +85,14 @@ class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         self.parent.dispatchMessages()
 
     def parseMessage(self, message):
+        # work out channel from key
+        channel = 0
+        if message['key'] in self.keys:
+            channel = self.keys.index(message['key'])
         # create PhotodiodeResponse object
         resp = photodiode.PhotodiodeResponse(
-            t=message['time'], channel=message['key'], value=message['pressed'], threshold=self.getThreshold()
+            t=message['time'], channel=channel, value=message['pressed'], 
+            threshold=self.getThreshold(channel)
         )
 
         return resp
@@ -167,13 +174,20 @@ class RipondaVoicekeyGroup(voicekey.BaseVoiceKeyGroup):
         self.parent = Riponda.resolve(pad)
         # reference self in parent
         self.parent.nodes.append(self)
+        # Riponda voicekey should be key 2, but this attribute can be changed if needed
+        self.keys = [2]
         # initialise base class
         voicekey.BaseVoiceKeyGroup.__init__(self, channels=channels, threshold=threshold)
     
     def parseMessage(self, message):
+        # work out channel from key
+        channel = 0
+        if message['key'] in self.keys:
+            channel = self.keys.index(message['key'])
+        # create voicekey resp
         resp = voicekey.VoiceKeyResponse(
             t=message['time'], channel=message['key']-1, value=message['pressed'], 
-            threshold=self._threshold, device=self
+            threshold=self.getThreshold(channel), device=self
         )
 
         return resp
@@ -339,18 +353,18 @@ class Riponda(base.BaseDevice):
             resp['time'] = float(resp['time']) / 1000 + self._lastTimerReset
             # store message
             self.messages[resp['time']] = resp
-            print(resp)
             # choose object to dispatch to
             for node in self.nodes:
                 # if device is 0, dispatch only to buttons
                 if resp['port'] == 0 and not isinstance(node, RipondaButtonGroup):
                     continue
-                # if device is 3, dispatch only to photodiodes
-                if resp['port'] == 3 and not isinstance(node, RipondaPhotodiodeGroup):
-                    continue
-                # if device is 2, dispatch only to voice keys
-                if resp['port'] == 2 and not isinstance(node, RipondaVoicekeyGroup):
-                    continue
+                # if device is 2, it could be a photodiode or a voice key
+                if resp['port'] == 2:
+                    if not isinstance(node, (RipondaPhotodiodeGroup, RipondaVoicekeyGroup)):
+                        continue
+                    # these we need to distinguish from keys
+                    if resp['key'] not in node.keys:
+                        continue
                 # dispatch to node
                 message = node.parseMessage(resp)
                 node.receiveMessage(message)
