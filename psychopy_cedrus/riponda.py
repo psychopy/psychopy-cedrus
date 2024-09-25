@@ -145,7 +145,7 @@ class RipondaButtonGroup(button.BaseButtonGroup):
 
     def parseMessage(self, message):
         resp = button.ButtonResponse(
-            t=message['time'], channel=message['key']-1, value=message['pressed']
+            t=message['time'], channel=message['key'], value=message['pressed']
         )
 
         return resp
