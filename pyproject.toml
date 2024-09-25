@@ -50,13 +50,16 @@ where = ["",]
 [project.entry-points."psychopy.experiment.components"]
 # old Component
 CedrusButtonBoxComponent = "psychopy_cedrus.components.cedrusBox:CedrusButtonBoxComponent"
-# new backends
+# button backends
 RipondaButtonBoxBackend = "psychopy_cedrus.components.riponda:RipondaButtonBoxBackend"
 RBButtonBoxBackend = "psychopy_cedrus.components.rb:RBButtonBoxBackend"
+# photodiode backends
+RipondaPhotodiodeValidatorBackend = "psychopy_cedrus.components.riponda:RipondaPhotodiodeValidatorBackend"
+RBPhotodiodeValidatorBackend = "psychopy_cedrus.components.rb:RBPhotodiodeValidatorBackend"
 
 [project.entry-points."psychopy.hardware.cedrus"]
 # RB series
-RB = "psychopy_cedrus.cedrus:RB"
+RB = "psychopy_cedrus.cedrus.rb:RB"
 RBPhotodiodeGroup = "psychopy_cedrus.riponda:RipondaPhotodiodeGroup"
 RBButtonGroup = "psychopy_cedrus.riponda:RipondaButtonGroup"
 RBVoicekey = "psychopy_cedrus.riponda:RipondaVoicekeyGroup"
