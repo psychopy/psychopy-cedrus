@@ -12,7 +12,7 @@ class RBButtonGroup(riponda.RipondaButtonGroup):
     pass
 
 
-class RBVoicekey(riponda.RipondaVoicekeyGroup):
+class RBVoicekeyGroup(riponda.RipondaVoicekeyGroup):
     pass
 
 
