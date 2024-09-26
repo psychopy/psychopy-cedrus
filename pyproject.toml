@@ -59,10 +59,10 @@ RBPhotodiodeValidatorBackend = "psychopy_cedrus.components.rb:RBPhotodiodeValida
 
 [project.entry-points."psychopy.hardware.cedrus"]
 # RB series
-RB = "psychopy_cedrus.cedrus.rb:RB"
-RBPhotodiodeGroup = "psychopy_cedrus.riponda:RipondaPhotodiodeGroup"
-RBButtonGroup = "psychopy_cedrus.riponda:RipondaButtonGroup"
-RBVoicekey = "psychopy_cedrus.riponda:RipondaVoicekeyGroup"
+RB = "psychopy_cedrus.rb:RB"
+RBPhotodiodeGroup = "psychopy_cedrus.rb:RBPhotodiodeGroup"
+RBButtonGroup = "psychopy_cedrus.rb:RBButtonGroup"
+RBVoicekey = "psychopy_cedrus.rb:RBVoicekeyGroup"
 # Riponda series
 Riponda = "psychopy_cedrus.riponda:Riponda"
 RipondaPhotodiodeGroup = "psychopy_cedrus.riponda:RipondaPhotodiodeGroup"
