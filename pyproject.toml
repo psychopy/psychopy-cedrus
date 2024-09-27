@@ -56,6 +56,9 @@ RBButtonBoxBackend = "psychopy_cedrus.components.rb:RBButtonBoxBackend"
 # photodiode backends
 RipondaPhotodiodeValidatorBackend = "psychopy_cedrus.components.riponda:RipondaPhotodiodeValidatorBackend"
 RBPhotodiodeValidatorBackend = "psychopy_cedrus.components.rb:RBPhotodiodeValidatorBackend"
+# voicekey backends
+RipondaVoiceKeyBackend = "psychopy_cedrus.components.riponda:RipondaVoiceKeyBackend"
+
 
 [project.entry-points."psychopy.hardware.cedrus"]
 # RB series
