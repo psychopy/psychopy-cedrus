@@ -1,7 +1,8 @@
-from psychopy.hardware import base, photodiode, button, voicekey
+from psychopy.hardware import base, photodiode, button
 from psychopy.hardware.manager import deviceManager, DeviceManager, ManagedDeviceError
-from psychopy import logging, layout
+from psychopy import logging, layout, __version__ as ppyVersion
 import pyxid2
+from packaging.version import Version
 
 
 class RipondaPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
@@ -167,71 +168,74 @@ class RipondaButtonGroup(button.BaseButtonGroup):
 
         return devices
 
+if Version(ppyVersion) >= "2025.1.0":
+    # base voicekey support was only added in 2025.1, so this is necessary to handle older versions
+    from psychopy.hardware import voicekey
 
-class RipondaVoicekeyGroup(voicekey.BaseVoiceKeyGroup):
-    def __init__(self, pad=0, channels=1, threshold=None):
-        # get parent
-        self.parent = Riponda.resolve(pad)
-        # reference self in parent
-        self.parent.nodes.append(self)
-        # Riponda voicekey should be key 2, but this attribute can be changed if needed
-        self.keys = [2]
-        # initialise base class
-        voicekey.BaseVoiceKeyGroup.__init__(self, channels=channels, threshold=threshold)
-    
-    def parseMessage(self, message):
-        # work out channel from key
-        channel = 0
-        if message['key'] in self.keys:
-            channel = self.keys.index(message['key'])
-        # create voicekey resp
-        resp = voicekey.VoiceKeyResponse(
-            t=message['time'], channel=message['key']-1, value=message['pressed'], 
-            threshold=self.getThreshold(channel), device=self
-        )
+    class RipondaVoicekeyGroup(voicekey.BaseVoiceKeyGroup):
+        def __init__(self, pad=0, channels=1, threshold=None):
+            # get parent
+            self.parent = Riponda.resolve(pad)
+            # reference self in parent
+            self.parent.nodes.append(self)
+            # Riponda voicekey should be key 2, but this attribute can be changed if needed
+            self.keys = [2]
+            # initialise base class
+            voicekey.BaseVoiceKeyGroup.__init__(self, channels=channels, threshold=threshold)
+        
+        def parseMessage(self, message):
+            # work out channel from key
+            channel = 0
+            if message['key'] in self.keys:
+                channel = self.keys.index(message['key'])
+            # create voicekey resp
+            resp = voicekey.VoiceKeyResponse(
+                t=message['time'], channel=message['key']-1, value=message['pressed'], 
+                threshold=self.getThreshold(channel), device=self
+            )
 
-        return resp
+            return resp
 
-    def resetTimer(self, clock=logging.defaultClock):
-        self.parent.resetTimer(clock=clock)
-    
-    def _setThreshold(self, threshold, channel=None):
-        if threshold is None:
-            return
-        # store value
-        self._threshold = threshold
-        # convert from base 16
-        thr = int(threshold / 255 * 100)
-        # send command
-        self.parent.xid.con.send_xid_command(f"itM{thr}")
-        # dispatch
-        self.dispatchMessages()
-        # return True/False according to state
-        return self.getState(channel)
+        def resetTimer(self, clock=logging.defaultClock):
+            self.parent.resetTimer(clock=clock)
+        
+        def _setThreshold(self, threshold, channel=None):
+            if threshold is None:
+                return
+            # store value
+            self._threshold = threshold
+            # convert from base 16
+            thr = int(threshold / 255 * 100)
+            # send command
+            self.parent.xid.con.send_xid_command(f"itM{thr}")
+            # dispatch
+            self.dispatchMessages()
+            # return True/False according to state
+            return self.getState(channel)
 
-    def isSameDevice(self, other):
-        if isinstance(other, type(self)):
-            # if given another RipondaVoiceKeyGroup, compare parent boxes
-            other = other.parent
-        elif isinstance(other, dict) and "pad" in other:
-            # if given a dict, make sure we have a `port` rather than a `pad`
-            other['port'] = other['pad']
-        # use parent's comparison method
-        return self.parent.isSameDevice(other)
-    
-    @staticmethod
-    def getAvailableDevices():
-        devices = []
-        # iterate through profiles of all serial port devices
-        for profile in Riponda.getAvailableDevices():
-            devices.append({
-                'deviceName': profile['deviceName'] + "_voicekey",
-                'pad': profile['deviceName'],
-                'index': profile['index'],
-                'channels': 1,
-            })
+        def isSameDevice(self, other):
+            if isinstance(other, type(self)):
+                # if given another RipondaVoiceKeyGroup, compare parent boxes
+                other = other.parent
+            elif isinstance(other, dict) and "pad" in other:
+                # if given a dict, make sure we have a `port` rather than a `pad`
+                other['port'] = other['pad']
+            # use parent's comparison method
+            return self.parent.isSameDevice(other)
+        
+        @staticmethod
+        def getAvailableDevices():
+            devices = []
+            # iterate through profiles of all serial port devices
+            for profile in Riponda.getAvailableDevices():
+                devices.append({
+                    'deviceName': profile['deviceName'] + "_voicekey",
+                    'pad': profile['deviceName'],
+                    'index': profile['index'],
+                    'channels': 1,
+                })
 
-        return devices
+            return devices
 
 
 class Riponda(base.BaseDevice):
