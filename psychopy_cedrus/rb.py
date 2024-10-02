@@ -1,20 +1,17 @@
-from psychopy_cedrus import riponda
-from psychopy.hardware.manager import deviceManager, DeviceManager, ManagedDeviceError
-from psychopy import logging, layout
-import pyxid2
+from psychopy_cedrus.base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoicekeyGroup
 
 
-class RBPhotodiodeGroup(riponda.RipondaPhotodiodeGroup):
+class RBDevice(BaseXidDevice):
     pass
 
 
-class RBButtonGroup(riponda.RipondaButtonGroup):
+class RBButtonGroup(BaseXidButtonGroup):
     pass
 
 
-class RBVoicekeyGroup(riponda.RipondaVoicekeyGroup):
+class RBPhotodiodeGroup(BaseXidPhotodiodeGroup):
     pass
 
 
-class RB(riponda.Riponda):
+class RBVoicekeyGroup(BaseXidVoicekeyGroup):
     pass
