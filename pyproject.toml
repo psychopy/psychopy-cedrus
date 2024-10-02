@@ -70,3 +70,8 @@ Riponda = "psychopy_cedrus.riponda:RipondaDevice"
 RipondaPhotodiodeGroup = "psychopy_cedrus.riponda:RipondaPhotodiodeGroup"
 RipondaButtonGroup = "psychopy_cedrus.riponda:RipondaButtonGroup"
 RipondaVoicekey = "psychopy_cedrus.riponda:RipondaVoicekeyGroup"
+# Riponda series
+StimTracker = "psychopy_cedrus.stimtracker:StimTrackerDevice"
+StimTrackerPhotodiodeGroup = "psychopy_cedrus.stimtracker:StimTrackerPhotodiodeGroup"
+StimTrackerButtonGroup = "psychopy_cedrus.stimtracker:StimTrackerButtonGroup"
+StimTrackerVoicekey = "psychopy_cedrus.stimtracker:StimTrackerVoicekeyGroup"
