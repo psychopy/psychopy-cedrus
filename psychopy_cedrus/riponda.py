@@ -1,4 +1,4 @@
-from .base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoicekeyGroup
+from .base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoiceKeyGroup
 
 
 class RipondaDevice(BaseXidDevice):
@@ -13,5 +13,5 @@ class RipondaPhotodiodeGroup(BaseXidPhotodiodeGroup):
     pass
 
 
-class RipondaVoicekeyGroup(BaseXidVoicekeyGroup):
+class RipondaVoiceKeyGroup(BaseXidVoiceKeyGroup):
     pass

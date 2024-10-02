@@ -1,4 +1,4 @@
-from psychopy_cedrus.base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoicekeyGroup
+from psychopy_cedrus.base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoiceKeyGroup
 
 
 class RBDevice(BaseXidDevice):
@@ -13,5 +13,5 @@ class RBPhotodiodeGroup(BaseXidPhotodiodeGroup):
     pass
 
 
-class RBVoicekeyGroup(BaseXidVoicekeyGroup):
+class RBVoiceKeyGroup(BaseXidVoiceKeyGroup):
     pass
