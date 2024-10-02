@@ -64,7 +64,7 @@ StimTrackerPhotodiodeValidatorBackend = "psychopy_cedrus.components.stimtracker:
 RBDevice = "psychopy_cedrus.rb:RBDevice"
 RBPhotodiodeGroup = "psychopy_cedrus.rb:RBPhotodiodeGroup"
 RBButtonGroup = "psychopy_cedrus.rb:RBButtonGroup"
-RBVoicekey = "psychopy_cedrus.rb:RBVoicekeyGroup"
+RBVoiceKey = "psychopy_cedrus.rb:RBVoiceKeyGroup"
 # Riponda series
 RipondaDevice = "psychopy_cedrus.riponda:RipondaDevice"
 RipondaPhotodiodeGroup = "psychopy_cedrus.riponda:RipondaPhotodiodeGroup"
