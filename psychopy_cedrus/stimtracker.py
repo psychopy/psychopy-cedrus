@@ -1,4 +1,4 @@
-from .base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoicekeyGroup
+from .base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoiceKeyGroup
 
 
 class StimTracker(BaseXidDevice):
@@ -43,7 +43,7 @@ class StimTrackerPhotodiodeGroup(BaseXidPhotodiodeGroup):
                 self.xid.enable_usb_output(selector, True)
 
 
-class StimTrackerVoicekeyGroup(BaseXidVoicekeyGroup):
+class StimTrackerVoiceKeyGroup(BaseXidVoiceKeyGroup):
     def __init__(
         self, index=0, channels=3, threshold=None, enableResponses=True
     ):

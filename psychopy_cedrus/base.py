@@ -1,12 +1,20 @@
-from psychopy.hardware import base, photodiode, button
+from psychopy.hardware.base import BaseDevice, BaseResponseDevice
+from psychopy.hardware.button import BaseButtonGroup, ButtonResponse
+from psychopy.hardware.photodiode import BasePhotodiodeGroup, PhotodiodeResponse
+
 from psychopy.hardware.manager import deviceManager, DeviceManager, ManagedDeviceError
 from psychopy import logging, layout, __version__ as ppyVersion
 import pyxid2
 import time
 from packaging.version import Version
+# voicekey is only available from 2015.1.0 onwards, so import with a safe fallback
+try:
+    from psychopy.hardware.voicekey import BaseVoiceKeyGroup, VoiceKeyResponse
+except ImportError:
+    from psychopy.hardware.base import BaseResponseDevice as BaseVoiceKeyGroup, BaseResponse as VoiceKeyResponse
 
 
-class BaseXidPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
+class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
     """
     Base class for all Cedrus XID photodiode devices.
     """
@@ -25,7 +33,7 @@ class BaseXidPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         # Xid photodiode should be key 3, but this attribute can be changed if needed
         self.keys = [3]
         # initialise base class
-        photodiode.BasePhotodiodeGroup.__init__(self, channels=channels)
+        BasePhotodiodeGroup.__init__(self, channels=channels)
 
     def isSameDevice(self, other):
         """
@@ -103,7 +111,7 @@ class BaseXidPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         if message['key'] in self.keys:
             channel = self.keys.index(message['key'])
         # create PhotodiodeResponse object
-        resp = photodiode.PhotodiodeResponse(
+        resp = PhotodiodeResponse(
             t=message['time'], channel=channel, value=message['pressed'], 
             threshold=self.getThreshold(channel)
         )
@@ -111,7 +119,7 @@ class BaseXidPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         return resp
 
 
-class BaseXidButtonGroup(button.BaseButtonGroup):
+class BaseXidButtonGroup(BaseButtonGroup):
     # all selectors for XID button nodes
     selectors = (
         # response keys
@@ -124,7 +132,7 @@ class BaseXidButtonGroup(button.BaseButtonGroup):
         # reference self in parent
         self.parent.nodes.append(self)
         # initialise base class
-        button.BaseButtonGroup.__init__(self, channels=channels)
+        BaseButtonGroup.__init__(self, channels=channels)
 
     def isSameDevice(self, other):
         """
@@ -163,7 +171,7 @@ class BaseXidButtonGroup(button.BaseButtonGroup):
         self.parent.dispatchMessages()
 
     def parseMessage(self, message):
-        resp = button.ButtonResponse(
+        resp = ButtonResponse(
             t=message['time'], channel=message['key'], value=message['pressed']
         )
 
@@ -186,94 +194,82 @@ class BaseXidButtonGroup(button.BaseButtonGroup):
 
         return devices
 
-if Version(ppyVersion) >= Version("2025.1.0"):
-    # base voicekey support was only added in 2025.1, so this is necessary to handle older versions
-    from psychopy.hardware import voicekey
 
-    class BaseXidVoicekeyGroup(voicekey.BaseVoiceKeyGroup):
-        # all selectors for XID voicekey nodes
-        selectors = (
-            # microphone
-            "M", 
-            # audio (left and right)
-            "L", "R", 
-        )
-        def __init__(self, pad=0, channels=1, threshold=None):
-            # get parent
-            self.parent = BaseXidDevice.resolve(pad)
-            self.xid = self.parent.xid
-            # reference self in parent
-            self.parent.nodes.append(self)
-            # BaseXid voicekey should be key 2, but this attribute can be changed if needed
-            self.keys = [2]
-            # initialise base class
-            voicekey.BaseVoiceKeyGroup.__init__(self, channels=channels, threshold=threshold)
-        
-        def parseMessage(self, message):
-            # work out channel from key
-            channel = 0
-            if message['key'] in self.keys:
-                channel = self.keys.index(message['key'])
-            # create voicekey resp
-            resp = voicekey.VoiceKeyResponse(
-                t=message['time'], channel=message['key']-1, value=message['pressed'], 
-                threshold=self.getThreshold(channel), device=self
-            )
-
-            return resp
-
-        def resetTimer(self, clock=logging.defaultClock):
-            self.parent.resetTimer(clock=clock)
-        
-        def _setThreshold(self, threshold, channel=None):
-            if threshold is None:
-                return
-            # store value
-            self._threshold = threshold
-            # convert from base 16
-            thr = int(threshold / 255 * 100)
-            # send command
-            self.parent.xid.con.send_xid_command(f"itM{thr}")
-            # dispatch
-            self.dispatchMessages()
-            # return True/False according to state
-            return self.getState(channel)
-
-        def isSameDevice(self, other):
-            if isinstance(other, type(self)):
-                # if given another BaseXidVoiceKeyGroup, compare parent boxes
-                other = other.parent
-            elif isinstance(other, dict) and "pad" in other:
-                # if given a dict, make sure we have a `port` rather than a `pad`
-                other['port'] = other['pad']
-            # use parent's comparison method
-            return self.parent.isSameDevice(other)
-        
-        @staticmethod
-        def getAvailableDevices():
-            devices = []
-            # iterate through profiles of all serial port devices
-            for profile in BaseXidDevice.getAvailableDevices():
-                devices.append({
-                    'deviceName': profile['deviceName'] + "_voicekey",
-                    'pad': profile['deviceName'],
-                    'index': profile['index'],
-                    'channels': 1,
-                })
-
-            return devices
-else:
-    class BaseXidVoicekeyGroup(base.BaseResponseDevice):
-        # all selectors for XID voicekey nodes
-        selectors = (
-            # microphone
-            "M", 
-            # audio (left and right)
-            "L", "R", 
+class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
+    # all selectors for XID voicekey nodes
+    selectors = (
+        # microphone
+        "M", 
+        # audio (left and right)
+        "L", "R", 
+    )
+    def __init__(self, pad=0, channels=1, threshold=None):
+        # get parent
+        self.parent = BaseXidDevice.resolve(pad)
+        self.xid = self.parent.xid
+        # reference self in parent
+        self.parent.nodes.append(self)
+        # BaseXid voicekey should be key 2, but this attribute can be changed if needed
+        self.keys = [2]
+        # initialise base class
+        BaseVoiceKeyGroup.__init__(self, channels=channels, threshold=threshold)
+    
+    def parseMessage(self, message):
+        # work out channel from key
+        channel = 0
+        if message['key'] in self.keys:
+            channel = self.keys.index(message['key'])
+        # create voicekey resp
+        resp = VoiceKeyResponse(
+            t=message['time'], channel=message['key']-1, value=message['pressed'], 
+            threshold=self.getThreshold(channel), device=self
         )
 
+        return resp
 
-class BaseXidDevice(base.BaseDevice):
+    def resetTimer(self, clock=logging.defaultClock):
+        self.parent.resetTimer(clock=clock)
+    
+    def _setThreshold(self, threshold, channel=None):
+        if threshold is None:
+            return
+        # store value
+        self._threshold = threshold
+        # convert from base 16
+        thr = int(threshold / 255 * 100)
+        # send command
+        self.parent.xid.con.send_xid_command(f"itM{thr}")
+        # dispatch
+        self.dispatchMessages()
+        # return True/False according to state
+        return self.getState(channel)
+
+    def isSameDevice(self, other):
+        if isinstance(other, type(self)):
+            # if given another BaseXidVoiceKeyGroup, compare parent boxes
+            other = other.parent
+        elif isinstance(other, dict) and "pad" in other:
+            # if given a dict, make sure we have a `port` rather than a `pad`
+            other['port'] = other['pad']
+        # use parent's comparison method
+        return self.parent.isSameDevice(other)
+    
+    @staticmethod
+    def getAvailableDevices():
+        devices = []
+        # iterate through profiles of all serial port devices
+        for profile in BaseXidDevice.getAvailableDevices():
+            devices.append({
+                'deviceName': profile['deviceName'] + "_voicekey",
+                'pad': profile['deviceName'],
+                'index': profile['index'],
+                'channels': 1,
+            })
+
+        return devices
+
+
+class BaseXidDevice(BaseDevice):
     """
     Base class for all Cedrus XID devices.
     """
