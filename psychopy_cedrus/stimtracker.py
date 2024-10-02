@@ -1,7 +1,7 @@
 from .base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoiceKeyGroup
 
 
-class StimTracker(BaseXidDevice):
+class StimTrackerDevice(BaseXidDevice):
     def __init__(
         self, index=0, enableResponses=True
     ):
