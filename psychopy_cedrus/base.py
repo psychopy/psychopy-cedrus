@@ -20,7 +20,7 @@ class BaseXidPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         self.parent = BaseXidDevice.resolve(pad)
         # reference self in parent
         self.parent.nodes.append(self)
-        # # Riponda photodiode should be key 3, but this attribute can be changed if needed
+        # Xid photodiode should be key 3, but this attribute can be changed if needed
         self.keys = [3]
         # initialise base class
         photodiode.BasePhotodiodeGroup.__init__(self, channels=channels)
@@ -32,8 +32,8 @@ class BaseXidPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
 
         Parameters
         ----------
-        other : RipondaPhotodiodeGroup, dict
-            Other RipondaPhotodiodeGroup to compare against, or a dict of params (which must include
+        other : BaseXidPhotodiodeGroup, dict
+            Other BaseXidPhotodiodeGroup to compare against, or a dict of params (which must include
             `index` as a key)
 
         Returns
@@ -42,7 +42,7 @@ class BaseXidPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
             True if the two objects represent the same physical device
         """
         if isinstance(other, type(self)):
-            # if given another RipondaPhotodiodeGroup, compare parent boxes
+            # if given another BaseXidPhotodiodeGroup, compare parent boxes
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
             # if given a dict, make sure we have a `port` rather than a `pad`
@@ -84,7 +84,7 @@ class BaseXidPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
 
     def dispatchMessages(self):
         """
-        Dispatch messages from parent Riponda to this photodiode group
+        Dispatch messages from parent BaseXid to this photodiode group
 
         Returns
         -------
@@ -128,8 +128,8 @@ class BaseXidButtonGroup(button.BaseButtonGroup):
 
         Parameters
         ----------
-        other : RipondaButtonGroup, dict
-            Other RipondaButtonGroup to compare against, or a dict of params (which must include
+        other : BaseXidButtonGroup, dict
+            Other BaseXidButtonGroup to compare against, or a dict of params (which must include
             `index` as a key)
 
         Returns
@@ -138,7 +138,7 @@ class BaseXidButtonGroup(button.BaseButtonGroup):
             True if the two objects represent the same physical device
         """
         if isinstance(other, type(self)):
-            # if given another RipondaButtonGroup, compare parent boxes
+            # if given another BaseXidButtonGroup, compare parent boxes
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
             # if given a dict, make sure we have a `port` rather than a `pad`
@@ -148,7 +148,7 @@ class BaseXidButtonGroup(button.BaseButtonGroup):
 
     def dispatchMessages(self):
         """
-        Dispatch messages from parent Riponda to this button group
+        Dispatch messages from parent BaseXid to this button group
 
         Returns
         -------
@@ -198,7 +198,7 @@ if Version(ppyVersion) >= Version("2025.1.0"):
             self.parent = BaseXidDevice.resolve(pad)
             # reference self in parent
             self.parent.nodes.append(self)
-            # Riponda voicekey should be key 2, but this attribute can be changed if needed
+            # BaseXid voicekey should be key 2, but this attribute can be changed if needed
             self.keys = [2]
             # initialise base class
             voicekey.BaseVoiceKeyGroup.__init__(self, channels=channels, threshold=threshold)
@@ -235,7 +235,7 @@ if Version(ppyVersion) >= Version("2025.1.0"):
 
         def isSameDevice(self, other):
             if isinstance(other, type(self)):
-                # if given another RipondaVoiceKeyGroup, compare parent boxes
+                # if given another BaseXidVoiceKeyGroup, compare parent boxes
                 other = other.parent
             elif isinstance(other, dict) and "pad" in other:
                 # if given a dict, make sure we have a `port` rather than a `pad`
@@ -291,7 +291,7 @@ class BaseXidDevice(base.BaseDevice):
     ):
         # give error if no device connected
         if not len(self.getAvailableDevices()):
-            raise ConnectionError("No Cedrus Riponda response pad is connected.")
+            raise ConnectionError("No Cedrus device is connected.")
         # get xid device
         self.index = index
         self.xid = pyxid2.get_xid_device(index)
@@ -306,12 +306,12 @@ class BaseXidDevice(base.BaseDevice):
     @classmethod
     def resolve(cls, requested):
         """
-        Take a value given to a device which has a Riponda as its parent and, from it, 
-        find/make the associated Riponda object.
+        Take a value given to a device which has a BaseXidDevice as its parent and, from it, 
+        find/make the associated BaseXidDevice object.
 
         Parameters
         ----------
-        requested : str, int or Riponda
+        requested : str, int or BaseXidDevice
             Value to resolve
         """
         # if requested is already a handle, return as is
@@ -325,19 +325,19 @@ class BaseXidDevice(base.BaseDevice):
                 return pad
         # try to get by index
         if isinstance(requested, int):
-            pad = DeviceManager.getDeviceBy("index", requested, deviceClass="psychopy_cedrus.riponda.Riponda")
+            pad = DeviceManager.getDeviceBy("index", requested, deviceClass="psychopy_cedrus.base.BaseXidDevice")
             # if found, return
             if pad is not None:
                 return pad
         # if given an index of a not-yet setup device, set one up
         if requested is None or isinstance(requested, int):
             return DeviceManager.addDevice(
-                deviceClass="psychopy_cedrus.riponda.Riponda",
-                deviceName=f"Riponda@{requested}",
+                deviceClass="psychopy_cedrus.base.BaseXidDevice",
+                deviceName=f"XidDevice@{requested}",
                 index=requested
             )
         # if still not found, raise error
-        raise ManagedDeviceError(f"Could not find/create any Riponda object from the value {requested}")
+        raise ManagedDeviceError(f"Could not find/create any BaseXidDevice object from the value {requested}")
 
     def isSameDevice(self, other):
         """
@@ -346,8 +346,8 @@ class BaseXidDevice(base.BaseDevice):
 
         Parameters
         ----------
-        other : Riponda, dict
-            Other Riponda to compare against, or a dict of params (which much include
+        other : BaseXidDevice, dict
+            Other BaseXidDevice to compare against, or a dict of params (which much include
             `index` as a key)
 
         Returns
@@ -382,12 +382,12 @@ class BaseXidDevice(base.BaseDevice):
 
     def addListener(self, listener):
         """
-        Add a listener, which will receive all the messages dispatched by this Riponda.
+        Add a listener, which will receive all the messages dispatched by this BaseXidDevice.
 
         Parameters
         ----------
         listener : hardware.listener.BaseListener
-            Object to duplicate messages to when dispatched by this Riponda.
+            Object to duplicate messages to when dispatched by this BaseXidDevice.
         """
         # add listener to all nodes
         for node in self.nodes:
