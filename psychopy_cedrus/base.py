@@ -118,6 +118,12 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
 
         return resp
 
+    def hasUnfinishedMessage(self):
+        """
+        Returns True if a message is still sending from the response box.
+        """
+        return self.parent.hasUnfinishedMessage()
+
 
 class BaseXidButtonGroup(BaseButtonGroup):
     # all selectors for XID button nodes
@@ -425,3 +431,9 @@ class BaseXidDevice(BaseDevice):
         self.xid.reset_timer()
         # store time
         self._lastTimerReset = clock.getTime(format=float)
+    
+    def hasUnfinishedMessage(self):
+        """
+        Returns True if a message is still sending from the response box.
+        """
+        return self.xid.has_response()
