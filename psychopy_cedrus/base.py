@@ -19,6 +19,7 @@ class BaseXidPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
     def __init__(self, pad, channels=1):
         # get parent
         self.parent = BaseXidDevice.resolve(pad)
+        self.xid = self.parent.xid
         # reference self in parent
         self.parent.nodes.append(self)
         # Xid photodiode should be key 3, but this attribute can be changed if needed
@@ -119,6 +120,7 @@ class BaseXidButtonGroup(button.BaseButtonGroup):
     def __init__(self, pad=0, channels=7):
         # get parent
         self.parent = BaseXidDevice.resolve(pad)
+        self.xid = self.parent.xid
         # reference self in parent
         self.parent.nodes.append(self)
         # initialise base class
@@ -199,6 +201,7 @@ if Version(ppyVersion) >= Version("2025.1.0"):
         def __init__(self, pad=0, channels=1, threshold=None):
             # get parent
             self.parent = BaseXidDevice.resolve(pad)
+            self.xid = self.parent.xid
             # reference self in parent
             self.parent.nodes.append(self)
             # BaseXid voicekey should be key 2, but this attribute can be changed if needed
@@ -289,9 +292,7 @@ class BaseXidDevice(base.BaseDevice):
         "T"
     )
 
-    def __init__(
-            self, index=0
-    ):
+    def __init__(self, index=0):
         # give error if no device connected
         if not len(self.getAvailableDevices()):
             raise ConnectionError("No Cedrus device is connected.")
