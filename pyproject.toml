@@ -28,6 +28,10 @@ classifiers = [
 urls.homepage = "https://psychopy.github.io/psychopy-cedrus"
 urls.changelog = "https://github.com/psychopy/psychopy-cedrus/blob/main/CHANGELOG.txt"
 
+requires = [
+  "pyxid2"
+]
+
 [project.optional-dependencies]
 # dependencies for building the docs
 docs = [
