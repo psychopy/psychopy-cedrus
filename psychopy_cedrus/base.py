@@ -411,7 +411,7 @@ class BaseXidDevice(BaseDevice):
                     continue
                 # if device is 2, it could be a photodiode or a voice key
                 if resp['port'] == 2:
-                    if not isinstance(node, (BaseXidPhotodiodeGroup, BaseXidVoicekeyGroup)):
+                    if not isinstance(node, (BaseXidPhotodiodeGroup, BaseXidVoiceKeyGroup)):
                         continue
                     # these we need to distinguish from keys
                     if resp['key'] not in node.keys:
