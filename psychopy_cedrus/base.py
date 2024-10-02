@@ -71,7 +71,7 @@ class BaseXidPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         # convert from base 16
         thr = threshold / 255 * 100
         # get channel selector
-        selector = ["A", "B", "C", "D"][channel]
+        selector = self.selectors[channel]
         # send command
         self.parent.xid.con.send_xid_command(f"it{selector}{thr}")
         # dispatch
