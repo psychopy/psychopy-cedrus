@@ -61,7 +61,7 @@ StimTrackerPhotodiodeValidatorBackend = "psychopy_cedrus.components.stimtracker:
 
 [project.entry-points."psychopy.hardware.cedrus"]
 # RB series
-RB = "psychopy_cedrus.rb:RB"
+RB = "psychopy_cedrus.rb:RBDevice"
 RBPhotodiodeGroup = "psychopy_cedrus.rb:RBPhotodiodeGroup"
 RBButtonGroup = "psychopy_cedrus.rb:RBButtonGroup"
 RBVoicekey = "psychopy_cedrus.rb:RBVoicekeyGroup"
@@ -69,9 +69,9 @@ RBVoicekey = "psychopy_cedrus.rb:RBVoicekeyGroup"
 Riponda = "psychopy_cedrus.riponda:RipondaDevice"
 RipondaPhotodiodeGroup = "psychopy_cedrus.riponda:RipondaPhotodiodeGroup"
 RipondaButtonGroup = "psychopy_cedrus.riponda:RipondaButtonGroup"
-RipondaVoicekey = "psychopy_cedrus.riponda:RipondaVoicekeyGroup"
+RipondaVoiceKey = "psychopy_cedrus.riponda:RipondaVoiceKeyGroup"
 # Riponda series
 StimTracker = "psychopy_cedrus.stimtracker:StimTrackerDevice"
 StimTrackerPhotodiodeGroup = "psychopy_cedrus.stimtracker:StimTrackerPhotodiodeGroup"
 StimTrackerButtonGroup = "psychopy_cedrus.stimtracker:StimTrackerButtonGroup"
-StimTrackerVoicekey = "psychopy_cedrus.stimtracker:StimTrackerVoicekeyGroup"
+StimTrackerVoiceKey = "psychopy_cedrus.stimtracker:StimTrackerVoiceKeyGroup"
