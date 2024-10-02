@@ -2,6 +2,7 @@ from psychopy.hardware import base, photodiode, button
 from psychopy.hardware.manager import deviceManager, DeviceManager, ManagedDeviceError
 from psychopy import logging, layout, __version__ as ppyVersion
 import pyxid2
+import time
 from packaging.version import Version
 
 
@@ -74,6 +75,8 @@ class BaseXidPhotodiodeGroup(photodiode.BasePhotodiodeGroup):
         selector = self.selectors[channel]
         # send command
         self.parent.xid.con.send_xid_command(f"it{selector}{thr}")
+        # brief pause to settle
+        time.sleep(0.03)
         # dispatch
         self.dispatchMessages()
         # return True/False according to state
