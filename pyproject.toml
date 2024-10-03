@@ -28,6 +28,10 @@ classifiers = [
 urls.homepage = "https://psychopy.github.io/psychopy-cedrus"
 urls.changelog = "https://github.com/psychopy/psychopy-cedrus/blob/main/CHANGELOG.txt"
 
+dependencies = [
+  "pyxid2"
+]
+
 [project.optional-dependencies]
 # dependencies for building the docs
 docs = [
@@ -51,20 +55,27 @@ where = ["",]
 # old Component
 CedrusButtonBoxComponent = "psychopy_cedrus.components.cedrusBox:CedrusButtonBoxComponent"
 # button backends
-RipondaButtonBoxBackend = "psychopy_cedrus.components.riponda:RipondaButtonBoxBackend"
 RBButtonBoxBackend = "psychopy_cedrus.components.rb:RBButtonBoxBackend"
+RipondaButtonBoxBackend = "psychopy_cedrus.components.riponda:RipondaButtonBoxBackend"
+StimTrackerButtonBoxBackend = "psychopy_cedrus.components.stimtracker:StimTrackerButtonBoxBackend"
 # photodiode backends
-RipondaPhotodiodeValidatorBackend = "psychopy_cedrus.components.riponda:RipondaPhotodiodeValidatorBackend"
 RBPhotodiodeValidatorBackend = "psychopy_cedrus.components.rb:RBPhotodiodeValidatorBackend"
+RipondaPhotodiodeValidatorBackend = "psychopy_cedrus.components.riponda:RipondaPhotodiodeValidatorBackend"
+StimTrackerPhotodiodeValidatorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerPhotodiodeValidatorBackend"
 
 [project.entry-points."psychopy.hardware.cedrus"]
 # RB series
-RB = "psychopy_cedrus.rb:RB"
+RBDevice = "psychopy_cedrus.rb:RBDevice"
 RBPhotodiodeGroup = "psychopy_cedrus.rb:RBPhotodiodeGroup"
 RBButtonGroup = "psychopy_cedrus.rb:RBButtonGroup"
-RBVoicekey = "psychopy_cedrus.rb:RBVoicekeyGroup"
+RBVoiceKey = "psychopy_cedrus.rb:RBVoiceKeyGroup"
 # Riponda series
-Riponda = "psychopy_cedrus.riponda:Riponda"
+RipondaDevice = "psychopy_cedrus.riponda:RipondaDevice"
 RipondaPhotodiodeGroup = "psychopy_cedrus.riponda:RipondaPhotodiodeGroup"
 RipondaButtonGroup = "psychopy_cedrus.riponda:RipondaButtonGroup"
-RipondaVoicekey = "psychopy_cedrus.riponda:RipondaVoicekeyGroup"
+RipondaVoiceKey = "psychopy_cedrus.riponda:RipondaVoiceKeyGroup"
+# Riponda series
+StimTrackerDevice = "psychopy_cedrus.stimtracker:StimTrackerDevice"
+StimTrackerPhotodiodeGroup = "psychopy_cedrus.stimtracker:StimTrackerPhotodiodeGroup"
+StimTrackerButtonGroup = "psychopy_cedrus.stimtracker:StimTrackerButtonGroup"
+StimTrackerVoiceKey = "psychopy_cedrus.stimtracker:StimTrackerVoiceKeyGroup"
