@@ -72,15 +72,19 @@ class BaseXidDevice(BaseDevice):
                 return pad
         # try to get by index
         if isinstance(requested, int):
-            pad = DeviceManager.getDeviceBy("index", requested, deviceClass="psychopy_cedrus.base.BaseXidDevice")
+            pad = DeviceManager.getDeviceBy(
+                "index", 
+                requested, 
+                deviceClass=f"{cls.__module__}.{cls.__name__}"
+            )
             # if found, return
             if pad is not None:
                 return pad
         # if given an index of a not-yet setup device, set one up
         if requested is None or isinstance(requested, int):
             return DeviceManager.addDevice(
-                deviceClass="psychopy_cedrus.base.BaseXidDevice",
-                deviceName=f"XidDevice@{requested}",
+                deviceClass=f"{cls.__module__}.{cls.__name__}",
+                deviceName=f"{cls.__name__}@{requested}",
                 index=requested
             )
         # if still not found, raise error
@@ -196,7 +200,7 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
 
     def __init__(self, pad, channels=1):
         # get parent
-        self.parent = BaseXidDevice.resolve(pad)
+        self.parent = self.parentCls.resolve(pad)
         self.xid = self.parent.xid
         # reference self in parent
         self.parent.nodes.append(self)
@@ -306,7 +310,7 @@ class BaseXidButtonGroup(BaseButtonGroup):
 
     def __init__(self, pad=0, channels=7):
         # get parent
-        self.parent = BaseXidDevice.resolve(pad)
+        self.parent = self.parentCls.resolve(pad)
         self.xid = self.parent.xid
         # reference self in parent
         self.parent.nodes.append(self)
@@ -386,7 +390,7 @@ class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
 
     def __init__(self, pad=0, channels=1, threshold=None):
         # get parent
-        self.parent = BaseXidDevice.resolve(pad)
+        self.parent = self.parentCls.resolve(pad)
         self.xid = self.parent.xid
         # reference self in parent
         self.parent.nodes.append(self)
