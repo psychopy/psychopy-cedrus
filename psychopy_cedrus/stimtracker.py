@@ -2,6 +2,8 @@ from .base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, Bas
 
 
 class StimTrackerDevice(BaseXidDevice):
+    productId = b"S"
+
     def __init__(
         self, index=0, enableResponses=True
     ):
@@ -16,6 +18,8 @@ class StimTrackerDevice(BaseXidDevice):
 
 
 class StimTrackerButtonGroup(BaseXidButtonGroup):
+    parentCls = StimTrackerDevice
+
     def __init__(
         self, pad=0, channels=8, enableResponses=True
     ):
@@ -30,6 +34,8 @@ class StimTrackerButtonGroup(BaseXidButtonGroup):
 
 
 class StimTrackerPhotodiodeGroup(BaseXidPhotodiodeGroup):
+    parentCls = StimTrackerDevice
+
     def __init__(
         self, pad=0, channels=3, enableResponses=True
     ):
@@ -44,6 +50,8 @@ class StimTrackerPhotodiodeGroup(BaseXidPhotodiodeGroup):
 
 
 class StimTrackerVoiceKeyGroup(BaseXidVoiceKeyGroup):
+    parentCls = StimTrackerDevice
+    
     def __init__(
         self, index=0, channels=3, threshold=None, enableResponses=True
     ):

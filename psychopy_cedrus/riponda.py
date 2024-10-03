@@ -2,16 +2,16 @@ from .base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, Bas
 
 
 class RipondaDevice(BaseXidDevice):
-    pass
+    productId = b"5"
 
 
 class RipondaButtonGroup(BaseXidButtonGroup):
-    pass
+    parentCls = RipondaDevice
 
 
 class RipondaPhotodiodeGroup(BaseXidPhotodiodeGroup):
-    pass
+    parentCls = RipondaDevice
 
 
 class RipondaVoiceKeyGroup(BaseXidVoiceKeyGroup):
-    pass
+    parentCls = RipondaDevice
