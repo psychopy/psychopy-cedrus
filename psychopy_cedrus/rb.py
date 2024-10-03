@@ -2,16 +2,16 @@ from psychopy_cedrus.base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhoto
 
 
 class RBDevice(BaseXidDevice):
-    pass
+    productId = b"2"
 
 
 class RBButtonGroup(BaseXidButtonGroup):
-    pass
+    parentCls = RBDevice
 
 
 class RBPhotodiodeGroup(BaseXidPhotodiodeGroup):
-    pass
+    parentCls = RBDevice
 
 
 class RBVoiceKeyGroup(BaseXidVoiceKeyGroup):
-    pass
+    parentCls = RBDevice
