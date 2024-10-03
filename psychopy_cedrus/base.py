@@ -67,7 +67,7 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
         for profile in BaseXidDevice.getAvailableDevices():
             devices.append({
                 'deviceName': profile['deviceName'] + "_photodiodes",
-                'pad': profile['deviceName'],
+                'pad': profile['index'],
                 'channels': 1,
             })
 
@@ -193,8 +193,7 @@ class BaseXidButtonGroup(BaseButtonGroup):
         for profile in BaseXidDevice.getAvailableDevices():
             devices.append({
                 'deviceName': profile['deviceName'] + "_buttons",
-                'pad': profile['deviceName'],
-                'index': profile['index'],
+                'pad': profile['index'],
                 'channels': 7,
             })
 
@@ -267,8 +266,7 @@ class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
         for profile in BaseXidDevice.getAvailableDevices():
             devices.append({
                 'deviceName': profile['deviceName'] + "_voicekey",
-                'pad': profile['deviceName'],
-                'index': profile['index'],
+                'pad': profile['index'],
                 'channels': 1,
             })
 
