@@ -34,6 +34,8 @@ class BaseXidDevice(BaseDevice):
     )
     # all Cedrus devices have a product ID - subclasses should specify what this is
     productId = None
+    # keep track of instances, as pyxid2 will not show active instances
+    instances = []
 
     def __init__(self, index=0):
         # give error if no device connected
@@ -42,6 +44,8 @@ class BaseXidDevice(BaseDevice):
         # get xid device
         self.index = index
         self.xid = pyxid2.get_xid_device(index)
+        # store xid instance
+        BaseXidDevice.instances.append(self)
         # nodes
         self.nodes = []
         # dict of responses by timestamp
@@ -49,6 +53,15 @@ class BaseXidDevice(BaseDevice):
         # reset timer
         self._lastTimerReset = None
         self.resetTimer()
+    
+    def __del__(self):
+        # remove instance from record on deletion
+        i = None
+        for i, obj in enumerate(self.instances):
+            if obj is self:
+                break
+        if i is not None:
+            self.instances.pop(i)
     
     @classmethod
     def resolve(cls, requested):
@@ -109,6 +122,9 @@ class BaseXidDevice(BaseDevice):
         if isinstance(other, type(self)):
             # if given another object, get index
             index = other.index
+        elif isinstance(other, (BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidPhotodiodeGroup)):
+            # if given a child object, get its parent's index
+            index = other.parent.index
         elif isinstance(other, dict) and "index" in other:
             # if given a dict, get index from key
             index = other['index']
@@ -130,6 +146,12 @@ class BaseXidDevice(BaseDevice):
                     'deviceName': profile.device_name,
                     'index': i,
                 })
+        # get_xid_devices only shows unconnected devices, so include connected ones here
+        for (i, inst) in enumerate(BaseXidDevice.instances):
+            devices.append({
+                'deviceName': inst.xid.device_name,
+                'index': inst.index,
+            })
 
         return devices
 
@@ -229,8 +251,8 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
             # if given another BaseXidPhotodiodeGroup, compare parent boxes
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
-            # if given a dict, make sure we have a `port` rather than a `pad`
-            other['port'] = other['pad']
+            # if given a dict, make sure we have an `index` rather than a `pad`
+            other['index'] = other.pop('pad')
         # use parent's comparison method
         return self.parent.isSameDevice(other)
 
@@ -337,8 +359,8 @@ class BaseXidButtonGroup(BaseButtonGroup):
             # if given another BaseXidButtonGroup, compare parent boxes
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
-            # if given a dict, make sure we have a `port` rather than a `pad`
-            other['port'] = other['pad']
+            # if given a dict, make sure we have an `index` rather than a `pad`
+            other['index'] = other.pop('pad')
         # use parent's comparison method
         return self.parent.isSameDevice(other)
 
@@ -434,8 +456,8 @@ class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
             # if given another BaseXidVoiceKeyGroup, compare parent boxes
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
-            # if given a dict, make sure we have a `port` rather than a `pad`
-            other['port'] = other['pad']
+            # if given a dict, make sure we have an `index` rather than a `pad`
+            other['index'] = other.pop('pad')
         # use parent's comparison method
         return self.parent.isSameDevice(other)
     
