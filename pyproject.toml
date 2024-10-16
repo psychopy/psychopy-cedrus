@@ -29,7 +29,7 @@ urls.homepage = "https://psychopy.github.io/psychopy-cedrus"
 urls.changelog = "https://github.com/psychopy/psychopy-cedrus/blob/main/CHANGELOG.txt"
 
 dependencies = [
-  "pyxid2"
+  "pyxid2>=1.0.7"
 ]
 
 [project.optional-dependencies]
