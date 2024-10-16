@@ -34,8 +34,6 @@ class BaseXidDevice(BaseDevice):
     )
     # all Cedrus devices have a product ID - subclasses should specify what this is
     productId = None
-    # keep track of instances, as pyxid2 will not show active instances
-    instances = []
 
     def __init__(self, index=0):
         # give error if no device connected
@@ -43,9 +41,7 @@ class BaseXidDevice(BaseDevice):
             raise ConnectionError("No Cedrus device is connected.")
         # get xid device
         self.index = index
-        self.xid = pyxid2.get_xid_device(index)
-        # store xid instance
-        BaseXidDevice.instances.append(self)
+        self.xid = pyxid2.get_xid_devices()[index]
         # nodes
         self.nodes = []
         # dict of responses by timestamp
@@ -53,15 +49,6 @@ class BaseXidDevice(BaseDevice):
         # reset timer
         self._lastTimerReset = None
         self.resetTimer()
-    
-    def __del__(self):
-        # remove instance from record on deletion
-        i = None
-        for i, obj in enumerate(self.instances):
-            if obj is self:
-                break
-        if i is not None:
-            self.instances.pop(i)
     
     @classmethod
     def resolve(cls, requested):
@@ -146,12 +133,6 @@ class BaseXidDevice(BaseDevice):
                     'deviceName': profile.device_name,
                     'index': i,
                 })
-        # get_xid_devices only shows unconnected devices, so include connected ones here
-        for (i, inst) in enumerate(BaseXidDevice.instances):
-            devices.append({
-                'deviceName': inst.xid.device_name,
-                'index': inst.index,
-            })
 
         return devices
 
