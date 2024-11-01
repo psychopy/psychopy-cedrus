@@ -256,7 +256,7 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
         # store value
         self._threshold = threshold
         # convert from base 16
-        thr = threshold / 255 * 100
+        thr = int(threshold * 100)
         # get channel selector
         selector = self.selectors[channel]
         # send command
@@ -424,7 +424,7 @@ class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
         # store value
         self._threshold = threshold
         # convert from base 16
-        thr = int(threshold / 255 * 100)
+        thr = int(threshold * 100)
         # send command
         self.parent.xid.con.send_xid_command(f"itM{thr}")
         # dispatch
