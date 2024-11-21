@@ -4,7 +4,6 @@ from psychopy.hardware.photodiode import BasePhotodiodeGroup, PhotodiodeResponse
 
 from psychopy.hardware.manager import deviceManager, DeviceManager, ManagedDeviceError
 from psychopy import logging, layout, __version__ as ppyVersion
-import pyxid2
 import time
 from packaging.version import Version
 # voicekey is only available from 2015.1.0 onwards, so import with a safe fallback
@@ -13,6 +12,14 @@ try:
 except ImportError:
     from psychopy.hardware.base import BaseResponseDevice as BaseVoiceKeyGroup, BaseResponse as VoiceKeyResponse
 
+
+# check whether FTDI driver is installed
+hasDriver = False
+try:
+    import ftd2xx
+    hasDriver = True
+except FileNotFoundError:
+    pass
 
 class BaseXidDevice(BaseDevice):
     """
@@ -36,6 +43,15 @@ class BaseXidDevice(BaseDevice):
     productId = None
 
     def __init__(self, index=0):
+        # error if there's no ftdi driver
+        if hasDriver:
+            import pyxid2
+        else:
+            raise ModuleNotFoundError(
+                "Could not connect to Cedrus device as your computer is missing a necessary "
+                "hardware driver. You should be able to find the correct driver for your operating "
+                "system here: https://ftdichip.com/drivers/vcp-drivers/"
+            )
         # give error if no device connected
         if not len(self.getAvailableDevices()):
             raise ConnectionError("No Cedrus device is connected.")
@@ -123,6 +139,11 @@ class BaseXidDevice(BaseDevice):
 
     @classmethod
     def getAvailableDevices(cls):
+        if hasDriver:
+            import pyxid2
+        else:
+            # if missing FTDI driver, return blank rather than erroring
+            return []
         # list devices
         devices = []
         # iterate through profiles of all serial port devices
