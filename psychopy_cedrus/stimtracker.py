@@ -21,11 +21,11 @@ class StimTrackerButtonGroup(BaseXidButtonGroup):
     parentCls = StimTrackerDevice
 
     def __init__(
-        self, pad=0, channels=8, enableResponses=True
+        self, pad=0, channels=8, bounce=0.005, enableResponses=True
     ):
         # initialise
         BaseXidButtonGroup.__init__(
-            self, pad=pad, channels=channels
+            self, pad=pad, channels=channels, bounce=bounce
         )
         # allow USB input (it's disabled by default)
         if enableResponses:
