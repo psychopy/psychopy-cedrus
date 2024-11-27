@@ -14,22 +14,32 @@ __author__ = 'Jon Peirce'
 
 
 class cedrusButtonBoxComponent(KeyboardComponent):
-    """An event class for checking an Cedrus RBxxx button boxes
-    using XID library
+    """
+    DEPRECATED
+    ----------
+    This is the old Component for interfacing with RB Series Cedrus boxes. Button boxes are now 
+    handled, regardless of device, by the ButtonBoxComponent, which has different "backends" for 
+    different devices, include Cedrus RB Series. Please use this instead.
 
-    This is based on keyboard component, several important differences:
-    - no special response class analogous to event.BuilderKeyResponse()
-    - enabled responses (active keys) are handled by the hardware device
+    Original docs:
+    
+        An event class for checking an Cedrus RBxxx button boxes
+        using XID library
 
-    More than one component in a routine will produce conflicts between
-    components over which active keys (for responses and lights).
+        This is based on keyboard component, several important differences:
+        - no special response class analogous to event.BuilderKeyResponse()
+        - enabled responses (active keys) are handled by the hardware device
+
+        More than one component in a routine will produce conflicts between
+        components over which active keys (for responses and lights).
     """
     categories = ['Responses']  # which section(s) in the components panel
     targets = ['PsychoPy']
     iconFile = Path(__file__).parent / 'cedrusBox.png'
-    tooltip = _translate('Cedrus Button Box: Cedrus response boxes, using the '
-                         'pyxid2 library provided by Cedrus')
+    tooltip = _translate('Cedrus Button Box: Legacy support for old experiment using an RB Series Cedrus box.')
     plugin = "psychopy-cedrus"
+    # this Component is for legacy support only, so hide it in Builder
+    hidden = True
 
     def __init__(self, exp, parentName, name='buttonBox',
                  store='first key',
