@@ -14,7 +14,7 @@ class StimTrackerDevice(BaseXidDevice):
         # allow USB input (it's disabled by default)
         if enableResponses:
             for selector in self.selectors:
-                self.xid.enable_usb_output(selector, True)
+                self.xid.set_enable_usb_output(selector, True)
 
 
 class StimTrackerButtonGroup(BaseXidButtonGroup):
@@ -27,10 +27,6 @@ class StimTrackerButtonGroup(BaseXidButtonGroup):
         BaseXidButtonGroup.__init__(
             self, pad=pad, channels=channels, bounce=bounce
         )
-        # allow USB input (it's disabled by default)
-        if enableResponses:
-            for selector in self.selectors:
-                self.xid.enable_usb_output(selector, True)
 
 
 class StimTrackerPhotodiodeGroup(BaseXidPhotodiodeGroup):
@@ -43,10 +39,6 @@ class StimTrackerPhotodiodeGroup(BaseXidPhotodiodeGroup):
         BaseXidPhotodiodeGroup.__init__(
             self, pad=pad, channels=channels
         )
-        # allow USB input (it's disabled by default)
-        if enableResponses:
-            for selector in self.selectors:
-                self.xid.enable_usb_output(selector, True)
 
 
 class StimTrackerVoiceKeyGroup(BaseXidVoiceKeyGroup):
@@ -59,7 +51,3 @@ class StimTrackerVoiceKeyGroup(BaseXidVoiceKeyGroup):
         BaseXidDevice.__init__(
             self, index=index, channels=channels, threshold=threshold
         )
-        # allow USB input (it's disabled by default)
-        if enableResponses:
-            for selector in self.selectors:
-                self.xid.enable_usb_output(selector, True)
