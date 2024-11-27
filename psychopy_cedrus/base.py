@@ -406,7 +406,7 @@ class BaseXidButtonGroup(BaseButtonGroup):
         buttons
         """
         # if given a single value, use it for both on and off
-        if isinstance(bounce, float):
+        if isinstance(bounce, (int, float)):
             bounce = (bounce, bounce)
         # store value
         self.bounce = bounce
