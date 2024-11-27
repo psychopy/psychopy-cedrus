@@ -324,6 +324,19 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
 
 
 class BaseXidButtonGroup(BaseButtonGroup):
+    """
+    Object representing the buttons on a Cedrus box.
+
+    Parameters
+    ----------
+    pad : int or BaseXidDevice
+        Pad which controls these buttons, either as an object or an index.
+    channels : int
+        Number of buttons
+    bounce : float
+        Time (s) to wait after a response in order to account for physical bounce on the buttons, 
+        default is 0.005 (5ms)
+    """
     # all selectors for XID button nodes
     selectors = (
         # response keys
@@ -332,12 +345,14 @@ class BaseXidButtonGroup(BaseButtonGroup):
     # subclasses need to know what class they expect their parent to be
     parentCls = BaseXidDevice
 
-    def __init__(self, pad=0, channels=7):
+    def __init__(self, pad=0, channels=7, bounce=0.005):
         # get parent
         self.parent = self.parentCls.resolve(pad)
         self.xid = self.parent.xid
         # reference self in parent
         self.parent.nodes.append(self)
+        # set bounce interval
+        self.setBounce(bounce)
         # initialise base class
         BaseButtonGroup.__init__(self, channels=channels)
 
@@ -383,6 +398,25 @@ class BaseXidButtonGroup(BaseButtonGroup):
         )
 
         return resp
+
+    def setBounce(self, bounce):
+        """
+        Set the time (s) to wait after a response in order to account for physical bounce on the 
+        buttons
+        """
+        # store value
+        self.bounce = bounce
+        # disable any bounce if value is 0
+        enable = bounce > 0
+        # set bounce on device
+        self.xid.set_signal_filter(self.selectors[0], enable, int(bounce * 1000))
+    
+    def getBounce(self, bounce):
+        """
+        Get the time (s) to wait after a response in order to account for physical bounce on the 
+        buttons
+        """
+        return self.xid.get_signal_filter(self.selectors[0]) / 1000
 
     def resetTimer(self, clock=logging.defaultClock):
         self.parent.resetTimer(clock=clock)
