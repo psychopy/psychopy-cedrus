@@ -58,6 +58,7 @@ CedrusButtonBoxComponent = "psychopy_cedrus.components.cedrusBox:CedrusButtonBox
 RBButtonBoxBackend = "psychopy_cedrus.components.rb:RBButtonBoxBackend"
 RipondaButtonBoxBackend = "psychopy_cedrus.components.riponda:RipondaButtonBoxBackend"
 StimTrackerButtonBoxBackend = "psychopy_cedrus.components.stimtracker:StimTrackerButtonBoxBackend"
+LuminaButtonBoxBackend = "psychopy_cedrus.components.lumina:LuminaButtonBoxBackend"
 # photodiode backends
 RBPhotodiodeValidatorBackend = "psychopy_cedrus.components.rb:RBPhotodiodeValidatorBackend"
 RipondaPhotodiodeValidatorBackend = "psychopy_cedrus.components.riponda:RipondaPhotodiodeValidatorBackend"
@@ -79,3 +80,6 @@ StimTrackerDevice = "psychopy_cedrus.stimtracker:StimTrackerDevice"
 StimTrackerPhotodiodeGroup = "psychopy_cedrus.stimtracker:StimTrackerPhotodiodeGroup"
 StimTrackerButtonGroup = "psychopy_cedrus.stimtracker:StimTrackerButtonGroup"
 StimTrackerVoiceKey = "psychopy_cedrus.stimtracker:StimTrackerVoiceKeyGroup"
+# Lumina series
+LuminaDevice = "psychopy_cedrus.lumina:LuminaDevice"
+LuminaButtonGroup = "psychopy_cedrus.lumina:LuminaButtonGroup"
