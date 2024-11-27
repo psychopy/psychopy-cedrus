@@ -333,9 +333,10 @@ class BaseXidButtonGroup(BaseButtonGroup):
         Pad which controls these buttons, either as an object or an index.
     channels : int
         Number of buttons
-    bounce : float
-        Time (s) to wait after a response in order to account for physical bounce on the buttons, 
-        default is 0.005 (5ms)
+    bounce : float or tuple[float, float]
+        Time (s) to wait after a response in order to account for physical bounce on the buttons. 
+        If given two values, will use the first to wait after a press and the second to wait after 
+        a release. Default is 0.005 (5ms).
     """
     # all selectors for XID button nodes
     selectors = (
@@ -404,12 +405,13 @@ class BaseXidButtonGroup(BaseButtonGroup):
         Set the time (s) to wait after a response in order to account for physical bounce on the 
         buttons
         """
+        # if given a single value, use it for both on and off
+        if isinstance(bounce, float):
+            bounce = (bounce, bounce)
         # store value
         self.bounce = bounce
-        # disable any bounce if value is 0
-        enable = bounce > 0
         # set bounce on device
-        self.xid.set_signal_filter(self.selectors[0], enable, int(bounce * 1000))
+        self.xid.set_signal_filter(self.selectors[0], int(bounce[0] * 1000), int(bounce[1] * 1000))
     
     def getBounce(self, bounce):
         """
