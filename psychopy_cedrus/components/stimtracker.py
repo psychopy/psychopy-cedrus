@@ -18,15 +18,6 @@ class StimTrackerPhotodiodeValidatorBackend(DeviceBackend):
 
     def getParams(self):
         return util.getXidPhotodiodeParams(key="stimtracker")
-
-    def addRequirements(self):
-        """
-        Add any required module/package imports for this backend
-        """
-        self.exp.requireImport(
-            importName="stimtracker",
-            importFrom="psychopy_cedrus"
-        )
     
     def writeDeviceCode(self, buff):
         return util.writeXidPhotodiodeCode(
@@ -50,12 +41,6 @@ class StimTrackerButtonBoxBackend(DeviceBackend):
 
     def getParams(self):
         return util.getXidButtonBoxParams(key="stimtracker")
-    
-    def addRequirements(self: ButtonBoxComponent):
-        self.exp.requireImport(
-            importName="stimtracker", 
-            importFrom="psychopy_cedrus"
-        )
     
     def writeDeviceCode(self, buff):
         return util.writeXidButtonBoxCode(
