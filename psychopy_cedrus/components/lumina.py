@@ -12,12 +12,6 @@ class LuminaButtonBoxBackend(DeviceBackend):
 
     def getParams(self):
         return util.getXidButtonBoxParams(key="lumina")
-
-    def addRequirements(self: ButtonBoxComponent):
-        self.exp.requireImport(
-            importName="lumina", 
-            importFrom="psychopy_cedrus"
-        )
     
     def writeDeviceCode(self, buff):
         return util.writeXidButtonBoxCode(
