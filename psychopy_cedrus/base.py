@@ -25,6 +25,11 @@ class BaseXidDevice(BaseDevice):
     """
     Base class for all Cedrus XID devices.
     """
+    # used to cache results of pyxid2.getDevices as it can take a while to return
+    _deviceCache = {
+        'devices': None,
+        'lastChecked': 0
+    }
 
     # all selectors for XID nodes
     selectors = (
@@ -144,10 +149,19 @@ class BaseXidDevice(BaseDevice):
         else:
             # if missing FTDI driver, return blank rather than erroring
             return []
+        # update cached devices if needed
+        if (
+            BaseXidDevice._deviceCache['devices'] is None 
+            or BaseXidDevice._deviceCache['lastChecked'] < time.time() - 15
+        ):
+            BaseXidDevice._deviceCache = {
+                'devices': pyxid2.get_xid_devices(), 
+                'lastChecked': time.time()
+            }
         # list devices
         devices = []
         # iterate through profiles of all serial port devices
-        for i, profile in enumerate(pyxid2.get_xid_devices()):
+        for i, profile in enumerate(BaseXidDevice._deviceCache['devices']):
             # only include devices which match this class's product ID
             if profile.product_id == cls.productId:
                 devices.append({
