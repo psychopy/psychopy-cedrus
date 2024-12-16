@@ -2,7 +2,8 @@ name: Publish docs
 
 on: 
   workflow_dispatch:  # manual
-  branches: [ main ]
+  push:
+    branches: [ main ]
 
 jobs:
   build:
