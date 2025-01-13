@@ -1,7 +1,7 @@
 from packaging.version import Version
 from psychopy import __version__ as ppyVersion
 from psychopy.experiment.components.buttonBox import ButtonBoxComponent
-from psychopy.experiment.routines.photodiodeValidator import PhotodiodeValidatorRoutine
+from psychopy.experiment.routines.visualValidator import VisualValidatorRoutine
 from psychopy.experiment import getInitVals, Param
 from psychopy.experiment.plugins import DeviceBackend
 from psychopy.localization import _translate
@@ -10,7 +10,7 @@ from . import util
 
 class RipondaPhotodiodeValidatorBackend(DeviceBackend):
     # which component is this backend for?
-    component = PhotodiodeValidatorRoutine
+    component = VisualValidatorRoutine
     # what value should Builder use for this backend?
     key = "riponda"
     # what label should be displayed by Builder for this backend?
@@ -32,8 +32,7 @@ class RipondaPhotodiodeValidatorBackend(DeviceBackend):
 
 class RipondaButtonBoxBackend(DeviceBackend):
     """
-    Adds a basic serial connection backend for ButtonBoxComponent, as well as acting as an example for implementing
-    other ButtonBoxBackends.
+    Adds support for the Cedrus Riponda button box.
     """
     key = "riponda"
     label = _translate("Cedrus Riponda")
