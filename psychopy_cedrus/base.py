@@ -268,6 +268,7 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
             # if given a dict, make sure we have an `index` rather than a `pad`
+            other = other.copy()
             other['index'] = other.pop('pad')
         # use parent's comparison method
         return self.parent.isSameDevice(other)
@@ -392,6 +393,7 @@ class BaseXidButtonGroup(BaseButtonGroup):
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
             # if given a dict, make sure we have an `index` rather than a `pad`
+            other = other.copy()
             other['index'] = other.pop('pad')
         # use parent's comparison method
         return self.parent.isSameDevice(other)
@@ -509,6 +511,7 @@ class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
             # if given a dict, make sure we have an `index` rather than a `pad`
+            other = other.copy()
             other['index'] = other.pop('pad')
         # use parent's comparison method
         return self.parent.isSameDevice(other)
