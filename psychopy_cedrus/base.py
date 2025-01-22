@@ -207,6 +207,11 @@ class BaseXidDevice(BaseDevice):
                     # these we need to distinguish from keys
                     if resp['key'] not in node.keys:
                         continue
+                # if device refers to a node by selector, send to that node
+                if isinstance(resp['port'], bytes):
+                    if resp['port'].decode() in self.selectors:
+                        if resp['port'].decode() not in node.selectors:
+                            continue
                 # dispatch to node
                 message = node.parseMessage(resp)
                 node.receiveMessage(message)
