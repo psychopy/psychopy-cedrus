@@ -26,10 +26,7 @@ class BaseXidDevice(BaseDevice):
     Base class for all Cedrus XID devices.
     """
     # used to cache results of pyxid2.getDevices as it can take a while to return
-    _deviceCache = {
-        'devices': None,
-        'lastChecked': 0
-    }
+    _deviceCache = None
 
     # all selectors for XID nodes
     selectors = (
@@ -62,7 +59,7 @@ class BaseXidDevice(BaseDevice):
             raise ConnectionError("No Cedrus device is connected.")
         # get xid device
         self.index = index
-        self.xid = pyxid2.get_xid_devices()[index]
+        self.xid = self._deviceCache[index]
         # nodes
         self.nodes = []
         # dict of responses by timestamp
@@ -143,25 +140,22 @@ class BaseXidDevice(BaseDevice):
         return self.index == index
 
     @classmethod
-    def getAvailableDevices(cls):
+    def getAvailableDevices(cls, update=False):
         if hasDriver:
             import pyxid2
         else:
             # if missing FTDI driver, return blank rather than erroring
             return []
+        # force update if asked to
+        if update:
+            BaseXidDevice._deviceCache = None
         # update cached devices if needed
-        if (
-            BaseXidDevice._deviceCache['devices'] is None 
-            or BaseXidDevice._deviceCache['lastChecked'] < time.time() - 15
-        ):
-            BaseXidDevice._deviceCache = {
-                'devices': pyxid2.get_xid_devices(), 
-                'lastChecked': time.time()
-            }
+        if BaseXidDevice._deviceCache is None:
+            BaseXidDevice._deviceCache = pyxid2.get_xid_devices()
         # list devices
         devices = []
         # iterate through profiles of all serial port devices
-        for i, profile in enumerate(BaseXidDevice._deviceCache['devices']):
+        for i, profile in enumerate(BaseXidDevice._deviceCache):
             # only include devices which match this class's product ID
             if profile.product_id == cls.productId:
                 devices.append({
