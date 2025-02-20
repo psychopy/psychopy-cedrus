@@ -1,6 +1,6 @@
 from psychopy.hardware.base import BaseDevice, BaseResponseDevice
 from psychopy.hardware.button import BaseButtonGroup, ButtonResponse
-from psychopy.hardware.photodiode import BasePhotodiodeGroup, PhotodiodeResponse
+from psychopy.hardware.lightsensor import BaseLightSensorGroup, LightSensorResponse
 
 from psychopy.hardware.manager import deviceManager, DeviceManager, ManagedDeviceError
 from psychopy import logging, layout, __version__ as ppyVersion
@@ -8,9 +8,9 @@ import time
 from packaging.version import Version
 # voicekey is only available from 2015.1.0 onwards, so import with a safe fallback
 try:
-    from psychopy.hardware.voicekey import BaseVoiceKeyGroup, VoiceKeyResponse
+    from psychopy.hardware.soundsensor import BaseSoundSensorGroup, SoundSensorResponse
 except ImportError:
-    from psychopy.hardware.base import BaseResponseDevice as BaseVoiceKeyGroup, BaseResponse as VoiceKeyResponse
+    from psychopy.hardware.base import BaseResponseDevice as BaseSoundSensorGroup, BaseResponse as SoundSensorResponse
 
 
 # check whether FTDI driver is installed
@@ -30,7 +30,7 @@ class BaseXidDevice(BaseDevice):
 
     # all selectors for XID nodes
     selectors = (
-        # photodiodes
+        # lightsensors
         "A", "B", "C", "D", 
         # microphone
         "M", 
@@ -127,7 +127,7 @@ class BaseXidDevice(BaseDevice):
         if isinstance(other, type(self)):
             # if given another object, get index
             index = other.index
-        elif isinstance(other, (BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidPhotodiodeGroup)):
+        elif isinstance(other, (BaseXidButtonGroup, BaseXidLightSensorGroup, BaseXidLightSensorGroup)):
             # if given a child object, get its parent's index
             index = other.parent.index
         elif isinstance(other, dict) and "index" in other:
@@ -194,9 +194,9 @@ class BaseXidDevice(BaseDevice):
                 # if device is 0, dispatch only to buttons
                 if resp['port'] == 0 and not isinstance(node, BaseXidButtonGroup):
                     continue
-                # if device is 2, it could be a photodiode or a voice key
+                # if device is 2, it could be a lightsensor or a voice key
                 if resp['port'] == 2:
-                    if not isinstance(node, (BaseXidPhotodiodeGroup, BaseXidVoiceKeyGroup)):
+                    if not isinstance(node, (BaseXidLightSensorGroup, BaseXidSoundSensorGroup)):
                         continue
                     # these we need to distinguish from keys
                     if resp['key'] not in node.keys:
@@ -223,13 +223,13 @@ class BaseXidDevice(BaseDevice):
         return self.xid.has_response()
 
 
-class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
+class BaseXidLightSensorGroup(BaseLightSensorGroup):
     """
-    Base class for all Cedrus XID photodiode devices.
+    Base class for all Cedrus XID lightsensor devices.
     """
-    # all selectors for XID photodiode nodes
+    # all selectors for XID lightsensor nodes
     selectors = (
-        # photodiodes
+        # lightsensors
         "A", "B", "C", "D", 
     )
     # subclasses need to know what class they expect their parent to be
@@ -241,10 +241,10 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
         self.xid = self.parent.xid
         # reference self in parent
         self.parent.nodes.append(self)
-        # Xid photodiode should be key 3, but this attribute can be changed if needed
+        # Xid lightsensor should be key 3, but this attribute can be changed if needed
         self.keys = [3]
         # initialise base class
-        BasePhotodiodeGroup.__init__(self, channels=channels)
+        BaseLightSensorGroup.__init__(self, channels=channels)
 
     def isSameDevice(self, other):
         """
@@ -253,8 +253,8 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
 
         Parameters
         ----------
-        other : BaseXidPhotodiodeGroup, dict
-            Other BaseXidPhotodiodeGroup to compare against, or a dict of params (which must include
+        other : BaseXidLightSensorGroup, dict
+            Other BaseXidLightSensorGroup to compare against, or a dict of params (which must include
             `index` as a key)
 
         Returns
@@ -263,7 +263,7 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
             True if the two objects represent the same physical device
         """
         if isinstance(other, type(self)):
-            # if given another BaseXidPhotodiodeGroup, compare parent boxes
+            # if given another BaseXidLightSensorGroup, compare parent boxes
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
             # if given a dict, make sure we have an `index` rather than a `pad`
@@ -278,7 +278,7 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
         # iterate through profiles of all serial port devices
         for profile in cls.parentCls.getAvailableDevices():
             devices.append({
-                'deviceName': profile['deviceName'] + "_photodiodes",
+                'deviceName': profile['deviceName'] + "_lightsensors",
                 'pad': profile['index'],
                 'channels': 1,
             })
@@ -308,7 +308,7 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
 
     def dispatchMessages(self):
         """
-        Dispatch messages from parent BaseXid to this photodiode group
+        Dispatch messages from parent BaseXid to this lightsensor group
 
         Returns
         -------
@@ -322,8 +322,8 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
         channel = 0
         if message['key'] in self.keys:
             channel = self.keys.index(message['key'])
-        # create PhotodiodeResponse object
-        resp = PhotodiodeResponse(
+        # create LightSensorResponse object
+        resp = LightSensorResponse(
             t=message['time'], channel=channel, value=message['pressed'], 
             threshold=self.getThreshold(channel)
         )
@@ -452,7 +452,7 @@ class BaseXidButtonGroup(BaseButtonGroup):
         return devices
 
 
-class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
+class BaseXidSoundSensorGroup(BaseSoundSensorGroup):
     # all selectors for XID voicekey nodes
     selectors = (
         # microphone
@@ -472,7 +472,7 @@ class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
         # BaseXid voicekey should be key 2, but this attribute can be changed if needed
         self.keys = [2]
         # initialise base class
-        BaseVoiceKeyGroup.__init__(self, channels=channels, threshold=threshold)
+        BaseSoundSensorGroup.__init__(self, channels=channels, threshold=threshold)
     
     def parseMessage(self, message):
         # work out channel from key
@@ -480,7 +480,7 @@ class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
         if message['key'] in self.keys:
             channel = self.keys.index(message['key'])
         # create voicekey resp
-        resp = VoiceKeyResponse(
+        resp = SoundSensorResponse(
             t=message['time'], channel=message['key']-1, value=message['pressed'], 
             threshold=self.getThreshold(channel), device=self
         )
@@ -506,7 +506,7 @@ class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
 
     def isSameDevice(self, other):
         if isinstance(other, type(self)):
-            # if given another BaseXidVoiceKeyGroup, compare parent boxes
+            # if given another BaseXidSoundSensorGroup, compare parent boxes
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
             # if given a dict, make sure we have an `index` rather than a `pad`

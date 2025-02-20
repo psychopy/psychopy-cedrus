@@ -1,14 +1,29 @@
 from packaging.version import Version
 from psychopy import __version__ as ppyVersion
-from psychopy.experiment.components.buttonBox import ButtonBoxComponent
-from psychopy.experiment.routines.visualValidator import VisualValidatorRoutine
 from psychopy.experiment import getInitVals, Param
-from psychopy.experiment.plugins import DeviceBackend
+from psychopy.experiment.plugins import DeviceBackend, PluginDevicesMixin
 from psychopy.localization import _translate
 from . import util
 
+# import Component/Routine classes in a version-safe way
+try:
+    from psychopy.experiment.components.buttonBox import ButtonBoxComponent
+except ImportError:
+    ButtonBoxComponent = PluginDevicesMixin
+try:
+    from psychopy.experiment.routines.visualValidator import VisualValidatorRoutine
+except ImportError:
+    VisualValidatorRoutine = PluginDevicesMixin
+try:
+    from psychopy.experiment.routines.audioValidator import AudioValidatorRoutine
+except ImportError:
+    AudioValidatorRoutine = PluginDevicesMixin
+try:
+    from psychopy.experiment.components.soundsensor import SoundSensorComponent
+except ImportError:
+    SoundSensorComponent = PluginDevicesMixin
 
-class RipondaPhotodiodeValidatorBackend(DeviceBackend):
+class RipondaVisualValidatorBackend(DeviceBackend):
     # which component is this backend for?
     component = VisualValidatorRoutine
     # what value should Builder use for this backend?
@@ -16,10 +31,10 @@ class RipondaPhotodiodeValidatorBackend(DeviceBackend):
     # what label should be displayed by Builder for this backend?
     label = _translate("Cedrus Riponda")
     # what hardware classes are relevant to this backend?
-    deviceClasses = ["psychopy_cedrus.riponda.RipondaPhotodiodeGroup"]
+    deviceClasses = ["psychopy_cedrus.riponda.RipondaLightSensorGroup"]
 
     def getParams(self):
-        return util.getXidPhotodiodeParams(key="riponda")
+        return util.getXidLightSensorParams(key="riponda")
 
     def addRequirements(self):
         """
@@ -28,10 +43,38 @@ class RipondaPhotodiodeValidatorBackend(DeviceBackend):
         return
     
     def writeDeviceCode(self, buff):
-        return util.writeXidPhotodiodeCode(
+        return util.writeXidLightSensorCode(
             self,
             buff,
-            cls="psychopy_cedrus.riponda.RipondaPhotodiodeGroup",
+            cls="psychopy_cedrus.riponda.RipondaLightSensorGroup",
+            key="riponda"
+        )
+
+
+class RipondaAudioValidatorBackend(DeviceBackend):
+    # which component is this backend for?
+    component = AudioValidatorRoutine
+    # what value should Builder use for this backend?
+    key = "riponda"
+    # what label should be displayed by Builder for this backend?
+    label = _translate("Cedrus Riponda")
+    # what hardware classes are relevant to this backend?
+    deviceClasses = ["psychopy_cedrus.riponda.RipondasoundSensorGroup"]
+
+    def getParams(self):
+        return util.getXidSoundSensorParams(key="riponda")
+
+    def addRequirements(self):
+        """
+        Add any required module/package imports for this backend
+        """
+        return
+    
+    def writeDeviceCode(self, buff):
+        return util.writeXidSoundSensorCode(
+            self,
+            buff,
+            cls="psychopy_cedrus.riponda.RipondaSoundSensorGroup",
             key="riponda"
         )
 
@@ -48,7 +91,7 @@ class RipondaButtonBoxBackend(DeviceBackend):
     def getParams(self):
         return util.getXidButtonBoxParams(key="riponda")
 
-    def addRequirements(self: ButtonBoxComponent):
+    def addRequirements(self):
         self.exp.requireImport(
             importName="riponda", 
             importFrom="psychopy_cedrus"
@@ -62,69 +105,29 @@ class RipondaButtonBoxBackend(DeviceBackend):
             key="riponda"
         )
 
-if Version(ppyVersion) >= Version("2025.1.0"):
-    # base voicekey support was only added in 2025.1, so this is necessary to handle older versions
-    from psychopy.experiment.components.voicekey import VoiceKeyComponent
 
-    class RipondaVoiceKeyBackend(DeviceBackend):
-        """
-        Implements Riponda for the VoiceKey Component
-        """
+class RipondaSoundSensorBackend(DeviceBackend):
+    """
+    Implements Riponda for the SoundSensor Component
+    """
 
-        key = "riponda"
-        label = _translate("Cedrus Riponda")
-        component = VoiceKeyComponent
-        deviceClasses = ['psychopy.hardware.voicekey.MicrophoneVoiceKeyEmulator']
+    key = "riponda"
+    label = _translate("Cedrus Riponda")
+    component = SoundSensorComponent
+    deviceClasses = ['psychopy_cedrus.riponda.RipondaSoundSensorGroup']
 
-        def getParams(self: VoiceKeyComponent):
-            # define order
-            order = [
-                "ripondaIndex",
-                "ripondaChannels",
-                "ripondaThreshold",
-            ]
-            # define params
-            params = {}       
-            params['ripondaIndex'] = Param(
-                0, valType='int', inputType="single", categ='Device',
-                label=_translate("Device number"),
-                hint=_translate(
-                    "Device number, if you have multiple devices which one do you want (0, 1, 2...)"
-                )
-            )
-            params['ripondaChannels'] = Param(
-                7, valType="code", inputType="single", categ="Device",
-                label=_translate("Num. channels"),
-                hint=_translate(
-                    "How many microphones are plugged into this Riponda?"
-                )
-            )
-            params['ripondaThreshold'] = Param(
-                0, valType='code', inputType="single", categ='Device',
-                label=_translate("Threshold"),
-                hint=_translate(
-                    "Threshold volume (0 for min, 255 for max) above which to register a voicekey "
-                    "response"
-                )
-            )
+    def getParams(self):
+        return util.getXidButtonBoxParams(key="riponda")
 
-            return params, order
+    def addRequirements(self):
+        self.exp.requireImport(
+            importName="riponda", importFrom="psychopy_cedrus"
+        )
 
-        def addRequirements(self):
-            self.exp.requireImport(
-                importName="riponda", importFrom="psychopy_cedrus"
-            )
-
-        def writeDeviceCode(self: VoiceKeyComponent, buff):
-            # get inits
-            inits = getInitVals(self.params)
-            # make ButtonGroup object
-            code = (
-                "deviceManager.addDevice(\n"
-                "    deviceClass='psychopy_cedrus.riponda.RipondaVoiceKeyGroup',\n"
-                "    deviceName=%(deviceLabel)s,\n"
-                "    pad=%(ripondaIndex)s,\n"
-                "    channels=%(ripondaChannels)s\n"
-                "    threshold=%(ripondaThreshold)s,\n"
-                ")\n"
-            )
+    def writeDeviceCode(self, buff):
+        return util.writeXidSoundSensorCode(
+            self,
+            buff,
+            cls="psychopy_cedrus.riponda.RipondaSoundSensorGroup",
+            key="riponda"
+        )

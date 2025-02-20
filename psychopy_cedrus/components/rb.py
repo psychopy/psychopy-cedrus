@@ -5,7 +5,7 @@ from psychopy.localization import _translate
 from . import util
 
 
-class RBPhotodiodeValidatorBackend(DeviceBackend):
+class RBVisualValidatorBackend(DeviceBackend):
     # which component is this backend for?
     component = VisualValidatorRoutine
     # what value should Builder use for this backend?
@@ -13,10 +13,10 @@ class RBPhotodiodeValidatorBackend(DeviceBackend):
     # what label should be displayed by Builder for this backend?
     label = _translate("Cedrus RB Series")
     # what hardware classes are relevant to this backend?
-    deviceClasses = ["psychopy_cedrus.rb.RBPhotodiodeGroup"]
+    deviceClasses = ["psychopy_cedrus.rb.RBLightSensorGroup"]
 
     def getParams(self):
-        return util.getXidPhotodiodeParams(key="rb")
+        return util.getXidLightSensorParams(key="rb")
 
     def addRequirements(self):
         """
@@ -25,10 +25,10 @@ class RBPhotodiodeValidatorBackend(DeviceBackend):
         return
     
     def writeDeviceCode(self, buff):
-        return util.writeXidPhotodiodeCode(
+        return util.writeXidLightSensorCode(
             self,
             buff,
-            cls="psychopy_cedrus.rb.RBPhotodiodeGroup",
+            cls="psychopy_cedrus.rb.RBLightSensorGroup",
             key="rb"
         )
 

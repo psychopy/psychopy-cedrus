@@ -55,7 +55,7 @@ def writeXidButtonBoxCode(self, buff, cls, key):
     buff.writeOnceIndentedLines(code % inits)
 
 
-def getXidPhotodiodeParams(key):
+def getXidLightSensorParams(key):
     # define order
     order = [
         f"{key}DeviceNo",
@@ -75,14 +75,14 @@ def getXidPhotodiodeParams(key):
         2, valType="code", inputType="single", categ="Device",
         label=_translate("Num. diodes"),
         hint=_translate(
-            "How many diodes this device has."
+            "How many sensors this device has."
         )
     )
 
     return params, order
 
 
-def writeXidPhotodiodeCode(self, buff, cls, key):
+def writeXidLightSensorCode(self, buff, cls, key):
     # get inits
     inits = getInitVals(self.params)
     # make ButtonGroup object
@@ -95,3 +95,53 @@ def writeXidPhotodiodeCode(self, buff, cls, key):
         f")\n"
     )
     buff.writeOnceIndentedLines(code % inits)
+
+
+def getXidSoundSensorParams(key):
+    # define order
+    order = [
+        f"{key}Index",
+        f"{key}Channels",
+        f"{key}Threshold",
+    ]
+    # define params
+    params = {}       
+    params[f'{key}Index'] = Param(
+        0, valType='int', inputType="single", categ='Device',
+        label=_translate("Device number"),
+        hint=_translate(
+            "Device number, if you have multiple devices which one do you want (0, 1, 2...)"
+        )
+    )
+    params[f'{key}Channels'] = Param(
+        7, valType="code", inputType="single", categ="Device",
+        label=_translate("Num. channels"),
+        hint=_translate(
+            "How many microphones are plugged into this device?"
+        )
+    )
+    params[f'{key}Threshold'] = Param(
+        0, valType='code', inputType="single", categ='Device',
+        label=_translate("Threshold"),
+        hint=_translate(
+            "Threshold volume (0 for min, 255 for max) above which to register a response"
+        )
+    )
+
+    return params, order
+
+
+def writeXidSoundSensorCode(self, buff, cls, key):
+    # get inits
+    inits = getInitVals(self.params)
+    # make SoundSensor object
+    code = (
+        f"deviceManager.addDevice(\n"
+        f"    deviceClass='{cls}',\n"
+        f"    deviceName=%(deviceLabel)s,\n"
+        f"    pad=%({key}Index)s,\n"
+        f"    channels=%({key}Channels)s\n"
+        f"    threshold=%({key}Threshold)s,\n"
+        f")\n"
+    )
+    buff.writeIndentedLines(code % inits)

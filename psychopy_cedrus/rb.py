@@ -1,4 +1,4 @@
-from psychopy_cedrus.base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoiceKeyGroup
+from psychopy_cedrus.base import BaseXidDevice, BaseXidButtonGroup, BaseXidLightSensorGroup, BaseXidSoundSensorGroup
 
 
 class RBDevice(BaseXidDevice):
@@ -9,9 +9,9 @@ class RBButtonGroup(BaseXidButtonGroup):
     parentCls = RBDevice
 
 
-class RBPhotodiodeGroup(BaseXidPhotodiodeGroup):
+class RBLightSensorGroup(BaseXidLightSensorGroup):
     parentCls = RBDevice
 
 
-class RBVoiceKeyGroup(BaseXidVoiceKeyGroup):
+class RBSoundSensorGroup(BaseXidSoundSensorGroup):
     parentCls = RBDevice

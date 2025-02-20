@@ -1,4 +1,4 @@
-from .base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoiceKeyGroup
+from .base import BaseXidDevice, BaseXidButtonGroup, BaseXidLightSensorGroup, BaseXidSoundSensorGroup
 
 
 class StimTrackerDevice(BaseXidDevice):
@@ -29,19 +29,19 @@ class StimTrackerButtonGroup(BaseXidButtonGroup):
         )
 
 
-class StimTrackerPhotodiodeGroup(BaseXidPhotodiodeGroup):
+class StimTrackerLightSensorGroup(BaseXidLightSensorGroup):
     parentCls = StimTrackerDevice
 
     def __init__(
         self, pad=0, channels=3, enableResponses=True
     ):
         # initialise
-        BaseXidPhotodiodeGroup.__init__(
+        BaseXidLightSensorGroup.__init__(
             self, pad=pad, channels=channels
         )
 
 
-class StimTrackerVoiceKeyGroup(BaseXidVoiceKeyGroup):
+class StimTrackerSoundSensorGroup(BaseXidSoundSensorGroup):
     parentCls = StimTrackerDevice
     
     def __init__(
