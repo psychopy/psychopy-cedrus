@@ -60,13 +60,15 @@ RipondaButtonBoxBackend = "psychopy_cedrus.components.riponda:RipondaButtonBoxBa
 StimTrackerButtonBoxBackend = "psychopy_cedrus.components.stimtracker:StimTrackerButtonBoxBackend"
 LuminaButtonBoxBackend = "psychopy_cedrus.components.lumina:LuminaButtonBoxBackend"
 # sound sensor backends
-RipondaSoundSensorBackend
+RipondaSoundSensorBackend = "psychopy_cedrus.components.riponda:RipondaSoundSensorBackend"
+StimTrackerSoundSensorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerSoundSensorBackend"
 # visual validator backends
 RBVisualValidatorBackend = "psychopy_cedrus.components.rb:RBVisualValidatorBackend"
 RipondaVisualValidatorBackend = "psychopy_cedrus.components.riponda:RipondaVisualValidatorBackend"
 StimTrackerVisualValidatorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerVisualValidatorBackend"
 # audio validator backends
-
+RipondaAudioValidatorBackend = "psychopy_cedrus.components.riponda:RipondaAudioValidatorBackend"
+StimTrackerAudioValidatorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerAudioValidatorBackend"
 
 [project.entry-points."psychopy.hardware.cedrus"]
 # RB series

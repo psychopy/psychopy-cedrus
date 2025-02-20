@@ -45,9 +45,9 @@ class StimTrackerSoundSensorGroup(BaseXidSoundSensorGroup):
     parentCls = StimTrackerDevice
     
     def __init__(
-        self, index=0, channels=3, threshold=None, enableResponses=True
+        self, pad=0, channels=3, threshold=None, enableResponses=True
     ):
         # initialise
-        BaseXidDevice.__init__(
-            self, index=index, channels=channels, threshold=threshold
+        BaseXidSoundSensorGroup.__init__(
+            self, pad=pad, channels=channels, threshold=threshold
         )

@@ -140,7 +140,7 @@ def writeXidSoundSensorCode(self, buff, cls, key):
         f"    deviceClass='{cls}',\n"
         f"    deviceName=%(deviceLabel)s,\n"
         f"    pad=%({key}Index)s,\n"
-        f"    channels=%({key}Channels)s\n"
+        f"    channels=%({key}Channels)s,\n"
         f"    threshold=%({key}Threshold)s,\n"
         f")\n"
     )

@@ -1,6 +1,3 @@
-from packaging.version import Version
-from psychopy import __version__ as ppyVersion
-from psychopy.experiment import getInitVals, Param
 from psychopy.experiment.plugins import DeviceBackend, PluginDevicesMixin
 from psychopy.localization import _translate
 from . import util

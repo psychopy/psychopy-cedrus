@@ -1,16 +1,24 @@
 from psychopy.hardware.base import BaseDevice, BaseResponseDevice
-from psychopy.hardware.button import BaseButtonGroup, ButtonResponse
-from psychopy.hardware.lightsensor import BaseLightSensorGroup, LightSensorResponse
-
 from psychopy.hardware.manager import deviceManager, DeviceManager, ManagedDeviceError
-from psychopy import logging, layout, __version__ as ppyVersion
+from psychopy import logging
 import time
-from packaging.version import Version
-# voicekey is only available from 2015.1.0 onwards, so import with a safe fallback
+
+# import hardware classes in a version-safe way
+try:
+    from psychopy.hardware.button import BaseButtonGroup, ButtonResponse
+except ImportError:
+    BaseButtonGroup = BaseDevice
+    ButtonResponse = BaseResponseDevice
 try:
     from psychopy.hardware.soundsensor import BaseSoundSensorGroup, SoundSensorResponse
 except ImportError:
-    from psychopy.hardware.base import BaseResponseDevice as BaseSoundSensorGroup, BaseResponse as SoundSensorResponse
+    BaseSoundSensorGroup = BaseDevice
+    SoundSensorResponse = BaseResponseDevice
+try:
+    from psychopy.hardware.lightsensor import BaseLightSensorGroup, LightSensorResponse
+except ImportError:
+    BaseLightSensorGroup = BaseDevice
+    LightSensorResponse = BaseResponseDevice
 
 
 # check whether FTDI driver is installed
