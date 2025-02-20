@@ -26,10 +26,7 @@ class BaseXidDevice(BaseDevice):
     Base class for all Cedrus XID devices.
     """
     # used to cache results of pyxid2.getDevices as it can take a while to return
-    _deviceCache = {
-        'devices': None,
-        'lastChecked': 0
-    }
+    _deviceCache = None
 
     # all selectors for XID nodes
     selectors = (
@@ -62,7 +59,7 @@ class BaseXidDevice(BaseDevice):
             raise ConnectionError("No Cedrus device is connected.")
         # get xid device
         self.index = index
-        self.xid = pyxid2.get_xid_devices()[index]
+        self.xid = self._deviceCache[index]
         # nodes
         self.nodes = []
         # dict of responses by timestamp
@@ -143,25 +140,22 @@ class BaseXidDevice(BaseDevice):
         return self.index == index
 
     @classmethod
-    def getAvailableDevices(cls):
+    def getAvailableDevices(cls, update=False):
         if hasDriver:
             import pyxid2
         else:
             # if missing FTDI driver, return blank rather than erroring
             return []
+        # force update if asked to
+        if update:
+            BaseXidDevice._deviceCache = None
         # update cached devices if needed
-        if (
-            BaseXidDevice._deviceCache['devices'] is None 
-            or BaseXidDevice._deviceCache['lastChecked'] < time.time() - 15
-        ):
-            BaseXidDevice._deviceCache = {
-                'devices': pyxid2.get_xid_devices(), 
-                'lastChecked': time.time()
-            }
+        if BaseXidDevice._deviceCache is None:
+            BaseXidDevice._deviceCache = pyxid2.get_xid_devices()
         # list devices
         devices = []
         # iterate through profiles of all serial port devices
-        for i, profile in enumerate(BaseXidDevice._deviceCache['devices']):
+        for i, profile in enumerate(BaseXidDevice._deviceCache):
             # only include devices which match this class's product ID
             if profile.product_id == cls.productId:
                 devices.append({
@@ -207,6 +201,11 @@ class BaseXidDevice(BaseDevice):
                     # these we need to distinguish from keys
                     if resp['key'] not in node.keys:
                         continue
+                # if device refers to a node by selector, send to that node
+                if isinstance(resp['port'], bytes):
+                    if resp['port'].decode() in self.selectors:
+                        if resp['port'].decode() not in node.selectors:
+                            continue
                 # dispatch to node
                 message = node.parseMessage(resp)
                 node.receiveMessage(message)
@@ -268,6 +267,7 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
             # if given a dict, make sure we have an `index` rather than a `pad`
+            other = other.copy()
             other['index'] = other.pop('pad')
         # use parent's comparison method
         return self.parent.isSameDevice(other)
@@ -290,8 +290,8 @@ class BaseXidPhotodiodeGroup(BasePhotodiodeGroup):
             return
         # store value
         self._threshold = threshold
-        # convert from base 16
-        thr = threshold / 255 * 100
+        # convert from base 16 integer to ASCII character
+        thr = chr(int(threshold / 255 * 100))
         # get channel selector
         selector = self.selectors[channel]
         # send command
@@ -392,6 +392,7 @@ class BaseXidButtonGroup(BaseButtonGroup):
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
             # if given a dict, make sure we have an `index` rather than a `pad`
+            other = other.copy()
             other['index'] = other.pop('pad')
         # use parent's comparison method
         return self.parent.isSameDevice(other)
@@ -494,8 +495,8 @@ class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
             return
         # store value
         self._threshold = threshold
-        # convert from base 16
-        thr = int(threshold / 255 * 100)
+        # convert from base 16 integer to ASCII character
+        thr = chr(int(threshold / 255 * 100))
         # send command
         self.parent.xid.con.send_xid_command(f"itM{thr}")
         # dispatch
@@ -509,6 +510,7 @@ class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
             other = other.parent
         elif isinstance(other, dict) and "pad" in other:
             # if given a dict, make sure we have an `index` rather than a `pad`
+            other = other.copy()
             other['index'] = other.pop('pad')
         # use parent's comparison method
         return self.parent.isSameDevice(other)

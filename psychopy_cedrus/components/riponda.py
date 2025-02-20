@@ -20,6 +20,12 @@ class RipondaPhotodiodeValidatorBackend(DeviceBackend):
 
     def getParams(self):
         return util.getXidPhotodiodeParams(key="riponda")
+
+    def addRequirements(self):
+        """
+        Add any required module/package imports for this backend
+        """
+        return
     
     def writeDeviceCode(self, buff):
         return util.writeXidPhotodiodeCode(
@@ -41,6 +47,12 @@ class RipondaButtonBoxBackend(DeviceBackend):
 
     def getParams(self):
         return util.getXidButtonBoxParams(key="riponda")
+
+    def addRequirements(self: ButtonBoxComponent):
+        self.exp.requireImport(
+            importName="riponda", 
+            importFrom="psychopy_cedrus"
+        )
     
     def writeDeviceCode(self, buff):
         return util.writeXidButtonBoxCode(
@@ -97,6 +109,11 @@ if Version(ppyVersion) >= Version("2025.1.0"):
             )
 
             return params, order
+
+        def addRequirements(self):
+            self.exp.requireImport(
+                importName="riponda", importFrom="psychopy_cedrus"
+            )
 
         def writeDeviceCode(self: VoiceKeyComponent, buff):
             # get inits

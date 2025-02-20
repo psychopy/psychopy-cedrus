@@ -12,6 +12,12 @@ class LuminaButtonBoxBackend(DeviceBackend):
 
     def getParams(self):
         return util.getXidButtonBoxParams(key="lumina")
+
+    def addRequirements(self: ButtonBoxComponent):
+        """
+        Add any required module/package imports for this backend
+        """
+        return
     
     def writeDeviceCode(self, buff):
         return util.writeXidButtonBoxCode(

@@ -17,6 +17,12 @@ class RBPhotodiodeValidatorBackend(DeviceBackend):
 
     def getParams(self):
         return util.getXidPhotodiodeParams(key="rb")
+
+    def addRequirements(self):
+        """
+        Add any required module/package imports for this backend
+        """
+        return
     
     def writeDeviceCode(self, buff):
         return util.writeXidPhotodiodeCode(
@@ -39,6 +45,12 @@ class RBButtonBoxBackend(DeviceBackend):
 
     def getParams(self):
         return util.getXidButtonBoxParams(key="rb")
+
+    def addRequirements(self: ButtonBoxComponent):
+        self.exp.requireImport(
+            importName="rb", 
+            importFrom="psychopy_cedrus"
+        )
     
     def writeDeviceCode(self, buff):
         return util.writeXidButtonBoxCode(
