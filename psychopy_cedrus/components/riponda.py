@@ -114,7 +114,7 @@ class RipondaSoundSensorBackend(DeviceBackend):
     deviceClasses = ['psychopy_cedrus.riponda.RipondaSoundSensorGroup']
 
     def getParams(self):
-        return util.getXidButtonBoxParams(key="riponda")
+        return util.getXidSoundSensorParams(key="riponda")
 
     def addRequirements(self):
         self.exp.requireImport(
