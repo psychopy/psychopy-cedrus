@@ -59,27 +59,35 @@ RBButtonBoxBackend = "psychopy_cedrus.components.rb:RBButtonBoxBackend"
 RipondaButtonBoxBackend = "psychopy_cedrus.components.riponda:RipondaButtonBoxBackend"
 StimTrackerButtonBoxBackend = "psychopy_cedrus.components.stimtracker:StimTrackerButtonBoxBackend"
 LuminaButtonBoxBackend = "psychopy_cedrus.components.lumina:LuminaButtonBoxBackend"
-# photodiode backends
-RBPhotodiodeValidatorBackend = "psychopy_cedrus.components.rb:RBPhotodiodeValidatorBackend"
-RipondaPhotodiodeValidatorBackend = "psychopy_cedrus.components.riponda:RipondaPhotodiodeValidatorBackend"
-StimTrackerPhotodiodeValidatorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerPhotodiodeValidatorBackend"
+# sound sensor backends
+RBSoundSensorBackend = "psychopy_cedrus.components.rb:RBSoundSensorBackend"
+RipondaSoundSensorBackend = "psychopy_cedrus.components.riponda:RipondaSoundSensorBackend"
+StimTrackerSoundSensorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerSoundSensorBackend"
+# visual validator backends
+RBVisualValidatorBackend = "psychopy_cedrus.components.rb:RBVisualValidatorBackend"
+RipondaVisualValidatorBackend = "psychopy_cedrus.components.riponda:RipondaVisualValidatorBackend"
+StimTrackerVisualValidatorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerVisualValidatorBackend"
+# audio validator backends
+RBAudioValidatorBackend = "psychopy_cedrus.components.rb:RBAudioValidatorBackend"
+RipondaAudioValidatorBackend = "psychopy_cedrus.components.riponda:RipondaAudioValidatorBackend"
+StimTrackerAudioValidatorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerAudioValidatorBackend"
 
 [project.entry-points."psychopy.hardware.cedrus"]
 # RB series
 RBDevice = "psychopy_cedrus.rb:RBDevice"
-RBPhotodiodeGroup = "psychopy_cedrus.rb:RBPhotodiodeGroup"
+RBLightSensorGroup = "psychopy_cedrus.rb:RBLightSensorGroup"
 RBButtonGroup = "psychopy_cedrus.rb:RBButtonGroup"
-RBVoiceKey = "psychopy_cedrus.rb:RBVoiceKeyGroup"
+RBSoundSensor = "psychopy_cedrus.rb:RBSoundSensorGroup"
 # Riponda series
 RipondaDevice = "psychopy_cedrus.riponda:RipondaDevice"
-RipondaPhotodiodeGroup = "psychopy_cedrus.riponda:RipondaPhotodiodeGroup"
+RipondaLightSensorGroup = "psychopy_cedrus.riponda:RipondaLightSensorGroup"
 RipondaButtonGroup = "psychopy_cedrus.riponda:RipondaButtonGroup"
-RipondaVoiceKey = "psychopy_cedrus.riponda:RipondaVoiceKeyGroup"
+RipondaSoundSensor = "psychopy_cedrus.riponda:RipondaSoundSensorGroup"
 # Riponda series
 StimTrackerDevice = "psychopy_cedrus.stimtracker:StimTrackerDevice"
-StimTrackerPhotodiodeGroup = "psychopy_cedrus.stimtracker:StimTrackerPhotodiodeGroup"
+StimTrackerLightSensorGroup = "psychopy_cedrus.stimtracker:StimTrackerLightSensorGroup"
 StimTrackerButtonGroup = "psychopy_cedrus.stimtracker:StimTrackerButtonGroup"
-StimTrackerVoiceKey = "psychopy_cedrus.stimtracker:StimTrackerVoiceKeyGroup"
+StimTrackerSoundSensor = "psychopy_cedrus.stimtracker:StimTrackerSoundSensorGroup"
 # Lumina series
 LuminaDevice = "psychopy_cedrus.lumina:LuminaDevice"
 LuminaButtonGroup = "psychopy_cedrus.lumina:LuminaButtonGroup"

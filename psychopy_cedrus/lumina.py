@@ -1,4 +1,4 @@
-from psychopy_cedrus.base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoiceKeyGroup
+from psychopy_cedrus.base import BaseXidDevice, BaseXidButtonGroup, BaseXidLightSensorGroup, BaseXidSoundSensorGroup
 
 
 class LuminaDevice(BaseXidDevice):

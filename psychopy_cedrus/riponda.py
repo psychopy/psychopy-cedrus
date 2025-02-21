@@ -1,4 +1,4 @@
-from .base import BaseXidDevice, BaseXidButtonGroup, BaseXidPhotodiodeGroup, BaseXidVoiceKeyGroup
+from .base import BaseXidDevice, BaseXidButtonGroup, BaseXidLightSensorGroup, BaseXidSoundSensorGroup
 
 
 class RipondaDevice(BaseXidDevice):
@@ -9,9 +9,9 @@ class RipondaButtonGroup(BaseXidButtonGroup):
     parentCls = RipondaDevice
 
 
-class RipondaPhotodiodeGroup(BaseXidPhotodiodeGroup):
+class RipondaLightSensorGroup(BaseXidLightSensorGroup):
     parentCls = RipondaDevice
 
 
-class RipondaVoiceKeyGroup(BaseXidVoiceKeyGroup):
+class RipondaSoundSensorGroup(BaseXidSoundSensorGroup):
     parentCls = RipondaDevice
