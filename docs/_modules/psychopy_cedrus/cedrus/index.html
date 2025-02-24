@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>psychopy_cedrus.cedrus &#8212; PsychoPy Example Plugin 0.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=536c50fe" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/psychopy.css?v=b9f4e6dd" />
+    <script src="../../../_static/documentation_options.js?v=d20be8f5"></script>
+    <script src="../../../_static/doctools.js?v=b682be12"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../../../_static/js/jquery-fix.js"></script>
+    <script src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-4089651-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-4089651-2');
+    </script>
+
+    <!-- Matomo -->
+    <script>
+      var _paq = window._paq = window._paq || [];
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+      _paq.push(["setCookieDomain", "*.psychopy.org"]);
+      _paq.push(["setDomains", ["*.psychopy.org","*.discourse.psychopy.org"]]);
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//analytics.opensciencetools.org/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '3']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <noscript><p><img src="//analytics.opensciencetools.org/matomo.php?idsite=3&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+    <!-- End Matomo Code -->
+
+
+  </head><body>
+
+<!-- The social media icon bar -->
+<div class="social-bar">
+  <a href="" class="github">
+    <i class="fab fa-github"></i></a>
+</div>
+
+
+<div id="navbar" class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand small-logo" href="../../../">
+        <img src="../../../_static/Psychopy Plugin Header Small.png" alt="PsychoPy Logo">
+      </a>
+      <a class="navbar-brand large-logo" href="../../../">
+        <img src="../../../_static/Psychopy Plugin Header Large.png" alt="PsychoPy Logo">
+      </a>
+      <!-- <span class="navbar-text navbar-version pull-right"><b></b></span> -->
+    </div>
+
+      <div class="collapse navbar-collapse nav-collapse w-100 pull-right">
+        <ul class="nav navbar-nav ml-auto">
+          <li><a href="../../../">Home</a></li>
+          <li><a href="../../../download/">Install</a></li>
+          
+          <li><a href="https://plugins.psychopy.org/directory.html" class="return-btn">plugins.psychopy.org</a></li>
+          
+            <!-- <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../">Documentation <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption" role="heading"><span class="caption-text">Added content for Builder</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../builder/components/CedrusButtonBoxComponent/">Cedrus Button Box Component</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Added content for Coder</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../coder/RB730/">RB730</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coder/Riponda/">Riponda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coder/RipondaButtonGroup/">RipondaButtonGroup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coder/RipondaPhotodiodeGroup/">RipondaLightSensorGroup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coder/RipondaVoicekey/">RipondaVoicekey</a></li>
+</ul>
+</ul>
+</li> -->
+            
+          
+          <!--  -->
+          
+          
+        </ul>
+
+          <!-- 
+            
+<form class="navbar-form navbar-right" action="../../../search/" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+
+      </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9 content">
+      
+  <h1>Source code for psychopy_cedrus.cedrus</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1"># Part of the PsychoPy library</span>
+<span class="c1"># Copyright (C) 2002-2018 Jonathan Peirce (C) 2019-2022 Open Science Tools Ltd.</span>
+<span class="c1"># Distributed under the terms of the GNU General Public License (GPL).</span>
+
+<span class="sd">&quot;&quot;&quot;Cedrus make a variety of input devices.</span>
+<span class="sd">See http://www.cedrus.com/</span>
+
+<span class="sd">DEPRECATED:</span>
+<span class="sd">This sub-package is out of date. Please use the cedrus-written</span>
+<span class="sd">pyxid2 package instead (bundled with Standalone PsychoPy)::</span>
+<span class="sd">    import pyxid2</span>
+
+<span class="sd">----------</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">psychopy</span><span class="w"> </span><span class="kn">import</span> <span class="n">core</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">struct</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">serial</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">serial</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<span class="k">class</span><span class="w"> </span><span class="nc">_KeyEvent</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Info about a keypress from Cedrus keypad XID string</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">XID</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;XID should contain a &quot;k&quot;&lt;info&gt;&lt;rt&gt; where info is a byte</span>
+<span class="sd">        and rt is 4 bytes (=int)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">_KeyEvent</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">XID</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">6</span><span class="p">:</span>
+            <span class="c1"># log.error(&quot;The XID string %s is %i bytes long and should</span>
+            <span class="c1">#   be 6 bytes&quot; %(str([XID]),len(XID)))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># a character and a ubyte of info</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="n">XID</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="c1"># was the key going down or up?</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">info</span> <span class="o">&gt;&gt;</span> <span class="mi">4</span><span class="p">)</span> <span class="o">%</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># this gives only the 4th bit</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s1">&#39;down&#39;</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">direction</span> <span class="o">=</span> <span class="s1">&#39;up&#39;</span>
+
+            <span class="c1"># what was the key?</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">key</span> <span class="o">=</span> <span class="n">info</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span>  <span class="c1"># bits 5-7 give the button number</span>
+
+            <span class="c1"># what was RT?</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rt</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;i&#39;</span><span class="p">,</span> <span class="n">XID</span><span class="p">[</span><span class="mi">2</span><span class="p">:])[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># integer in ms</span>
+
+
+<div class="viewcode-block" id="RB730">
+<a class="viewcode-back" href="../../../coder/RB730/#psychopy_cedrus.cedrus.RB730">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">RB730</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Class to control/read a Cedrus RB-series response box</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="mi">115200</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;XID&#39;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">RB730</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">serial</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;The module serial is needed to connect to the&quot;</span>
+                              <span class="s2">&quot; Cedrus response pad. On most systems this can&quot;</span>
+                              <span class="s2">&quot; be installed with</span><span class="se">\n\t</span><span class="s2"> easy_install pyserial&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="s1">&#39;RB703&#39;</span>
+        <span class="c1"># set name of port</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">port</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">portNumber</span> <span class="o">=</span> <span class="n">port</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">portString</span> <span class="o">=</span> <span class="s1">&#39;COM</span><span class="si">%i</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">portNumber</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">portString</span> <span class="o">=</span> <span class="n">port</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">portNumber</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode</span> <span class="o">=</span> <span class="n">mode</span>  <span class="c1"># can be &#39;xid&#39;, &#39;rb&#39;, &#39;ascii&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">baudrate</span> <span class="o">=</span> <span class="n">baudrate</span>
+        <span class="c1"># open the serial port</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span> <span class="o">=</span> <span class="n">serial</span><span class="o">.</span><span class="n">Serial</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">portString</span><span class="p">,</span> <span class="n">baudrate</span><span class="o">=</span><span class="n">baudrate</span><span class="p">,</span>
+                                  <span class="n">bytesize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">parity</span><span class="o">=</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="n">stopbits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                  <span class="n">timeout</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">isOpen</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">open</span><span class="p">()</span>
+        <span class="c1"># self.buffer = &#39;&#39;  # our own buffer (in addition to the serial port</span>
+        <span class="c1"># buffer)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">clearBuffer</span><span class="p">()</span>
+
+<div class="viewcode-block" id="RB730.sendMessage">
+<a class="viewcode-back" href="../../../coder/RB730/#psychopy_cedrus.cedrus.RB730.sendMessage">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">sendMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">writelines</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_clearBuffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;DEPRECATED as of 1.00.05</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">flushInput</span><span class="p">()</span>
+
+<div class="viewcode-block" id="RB730.clearBuffer">
+<a class="viewcode-back" href="../../../coder/RB730/#psychopy_cedrus.cedrus.RB730.clearBuffer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">clearBuffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Empty the input buffer of all characters. Call this to clear</span>
+<span class="sd">        any keypresses that haven&#39;t yet been handled.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">flushInput</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="RB730.getKeyEvents">
+<a class="viewcode-back" href="../../../coder/RB730/#psychopy_cedrus.cedrus.RB730.getKeyEvents">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getKeyEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">allowedKeys</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">downOnly</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Return a list of keyEvents</span>
+<span class="sd">        Each event has the following attributes:</span>
+
+<span class="sd">            keyEvt.key is the button pressed (or released) (an int)</span>
+<span class="sd">            keyEvt.rt [=float] is the time (in secs) since the rt</span>
+<span class="sd">            clock was last reset (a float)</span>
+<span class="sd">            keyEvt.direction is the direction the button was going</span>
+<span class="sd">            (&#39;up&#39; or &#39;down&#39;)</span>
+
+<span class="sd">        allowedKeys will limit the set of keys that are returned</span>
+<span class="sd">        (WARNING: info about other keys is discarded)</span>
+<span class="sd">        downOnly limits the function to report only the downward</span>
+<span class="sd">        stroke of the key</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># get the raw string</span>
+        <span class="n">nToGet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">inWaiting</span><span class="p">()</span>
+        <span class="c1"># self.buffer += self.port.read(nToGet)  # extend our own buffer (then</span>
+        <span class="c1"># remove the bits we use)</span>
+        <span class="c1"># extend our own buffer (then remove the bits we use)</span>
+        <span class="n">inputStr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">nToGet</span><span class="p">)</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># loop through messages for keys</span>
+        <span class="n">nKeys</span> <span class="o">=</span> <span class="n">inputStr</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>  <span class="c1"># find the &quot;k&quot;s</span>
+        <span class="k">for</span> <span class="n">keyN</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nKeys</span><span class="p">):</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">inputStr</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>  <span class="c1"># find the next key</span>
+            <span class="n">stop</span> <span class="o">=</span> <span class="n">start</span> <span class="o">+</span> <span class="mi">6</span>
+            <span class="c1"># check we have that many characters(in case we read the buffer</span>
+            <span class="c1"># partway through output)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputStr</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">stop</span><span class="p">:</span>
+                <span class="n">inputStr</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">stop</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">inputStr</span><span class="p">))</span>
+            <span class="n">keyString</span> <span class="o">=</span> <span class="n">inputStr</span><span class="p">[</span><span class="n">start</span><span class="p">:</span><span class="n">stop</span><span class="p">]</span>
+            <span class="n">keyEvt</span> <span class="o">=</span> <span class="n">_KeyEvent</span><span class="p">(</span><span class="n">XID</span><span class="o">=</span><span class="n">keyString</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">keyEvt</span><span class="o">.</span><span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">allowedKeys</span><span class="p">:</span>
+                <span class="k">continue</span>  <span class="c1"># ignore this keyEvt and move on</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">downOnly</span> <span class="o">==</span> <span class="kc">True</span> <span class="ow">and</span> <span class="n">keyEvt</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">&#39;up&#39;</span><span class="p">):</span>
+                <span class="k">continue</span>  <span class="c1"># ignore this keyEvt and move on</span>
+
+            <span class="c1"># we found a valid keyEvt</span>
+            <span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">keyEvt</span><span class="p">)</span>
+            <span class="c1"># remove the (1st occurrence of) string from the buffer</span>
+            <span class="n">inputStr</span> <span class="o">=</span> <span class="n">inputStr</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">keyString</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">keys</span></div>
+
+
+<div class="viewcode-block" id="RB730.readMessage">
+<a class="viewcode-back" href="../../../coder/RB730/#psychopy_cedrus.cedrus.RB730.readMessage">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">readMessage</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Read and return an unformatted string from the device</span>
+<span class="sd">        (and delete this from the buffer)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">nToGet</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">inWaiting</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">port</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">nToGet</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RB730.measureRoundTrip">
+<a class="viewcode-back" href="../../../coder/RB730/#psychopy_cedrus.cedrus.RB730.measureRoundTrip">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">measureRoundTrip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># round trip</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;e4&#39;</span><span class="p">)</span>  <span class="c1"># start round trip</span>
+        <span class="c1"># wait for &#39;X&#39;</span>
+        <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">readMessage</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;X&#39;</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>  <span class="c1"># send it back</span>
+
+        <span class="c1"># wait for final time info</span>
+        <span class="n">msgBack</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">msgBack</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">msgBack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readMessage</span><span class="p">()</span>
+        <span class="n">tStr</span> <span class="o">=</span> <span class="n">msgBack</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;H&#39;</span><span class="p">,</span> <span class="n">tStr</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># 2 bytes (an unsigned short)</span>
+        <span class="k">return</span> <span class="n">t</span></div>
+
+
+<div class="viewcode-block" id="RB730.waitKeyEvents">
+<a class="viewcode-back" href="../../../coder/RB730/#psychopy_cedrus.cedrus.RB730.waitKeyEvents">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">waitKeyEvents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">allowedKeys</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="n">downOnly</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Like getKeyEvents, but waits until a key is pressed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">noKeyYet</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">while</span> <span class="n">noKeyYet</span><span class="p">:</span>
+            <span class="n">keys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">getKeyEvents</span><span class="p">(</span>
+                <span class="n">allowedKeys</span><span class="o">=</span><span class="n">allowedKeys</span><span class="p">,</span> <span class="n">downOnly</span><span class="o">=</span><span class="n">downOnly</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">keys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">noKeyYet</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="n">keys</span></div>
+
+
+<div class="viewcode-block" id="RB730.resetTrialTimer">
+<a class="viewcode-back" href="../../../coder/RB730/#psychopy_cedrus.cedrus.RB730.resetTrialTimer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resetTrialTimer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;e5&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RB730.resetBaseTimer">
+<a class="viewcode-back" href="../../../coder/RB730/#psychopy_cedrus.cedrus.RB730.resetBaseTimer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">resetBaseTimer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;e1&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RB730.getBaseTimer">
+<a class="viewcode-back" href="../../../coder/RB730/#psychopy_cedrus.cedrus.RB730.getBaseTimer">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getBaseTimer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Retrieve the current time on the base timer</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;e3&#39;</span><span class="p">)</span>
+        <span class="c1"># core.wait(0.05)</span>
+        <span class="n">localTimer</span> <span class="o">=</span> <span class="n">core</span><span class="o">.</span><span class="n">Clock</span><span class="p">()</span>
+
+        <span class="n">msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">readMessage</span><span class="p">()</span>
+        <span class="n">ii</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;e3&#39;</span><span class="p">)</span>
+        <span class="n">tStr</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="n">ii</span> <span class="o">+</span> <span class="mi">2</span><span class="p">:</span><span class="n">ii</span> <span class="o">+</span> <span class="mi">6</span><span class="p">]</span>  <span class="c1"># 4 bytes (an int) of time info</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">struct</span><span class="o">.</span><span class="n">unpack</span><span class="p">(</span><span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="n">tStr</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">t</span></div>
+
+
+<div class="viewcode-block" id="RB730.getInfo">
+<a class="viewcode-back" href="../../../coder/RB730/#psychopy_cedrus.cedrus.RB730.getInfo">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">getInfo</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the name of this device</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sendMessage</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;_d1&#39;</span><span class="p">)</span>
+        <span class="n">core</span><span class="o">.</span><span class="n">wait</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">readMessage</span><span class="p">()</span></div>
+</div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+
+      <br/><a href="#" class="pull-right">Back to top</a>
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <span class="pull-right">
+      
+        
+      <br/>
+
+          &copy; 2002-2018 <a href="https://www.peirce.org.uk/">Jonathan Peirce</a><br/>
+          &copy; 2019 <a href="https://opensciencetools.org/">Open Science Tools Ltd.</a><br/><br/>
+        PsychoPy<sup>®</sup> and Pavlovia<sup>®</sup> are registered trademarks of Open Science Tools Ltd.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 8.1.3.<br/><br/>
+    </span>
+
+    <a href="http://www.nottingham.ac.uk/"><img src="../../../_static/Nottingham Supported.png", alt="Uni of Nottingham" width=250></a>
+  </div>
+
+</footer>
+  </body>
+</html>
