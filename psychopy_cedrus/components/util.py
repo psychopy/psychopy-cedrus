@@ -121,10 +121,10 @@ def getXidSoundSensorParams(key):
         )
     )
     params[f'{key}Threshold'] = Param(
-        0, valType='code', inputType="single", categ='Device',
+        0.5, valType='code', inputType="single", categ='Device',
         label=_translate("Threshold"),
         hint=_translate(
-            "Threshold volume (0 for min, 255 for max) above which to register a response"
+            "Threshold volume (0 for min, 1 for max) above which to register a response"
         )
     )
 
