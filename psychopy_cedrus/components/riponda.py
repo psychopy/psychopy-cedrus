@@ -56,7 +56,7 @@ class RipondaAudioValidatorBackend(DeviceBackend):
     # what label should be displayed by Builder for this backend?
     label = _translate("Cedrus Riponda")
     # what hardware classes are relevant to this backend?
-    deviceClasses = ["psychopy_cedrus.riponda.RipondasoundSensorGroup"]
+    deviceClasses = ["psychopy_cedrus.riponda.RipondaSoundSensorGroup"]
 
     def getParams(self):
         return util.getXidSoundSensorParams(key="riponda")
