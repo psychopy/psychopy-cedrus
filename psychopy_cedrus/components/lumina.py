@@ -12,7 +12,7 @@ except ImportError:
 class LuminaButtonBoxBackend(DeviceBackend):
     key = "lumina"
     label = _translate("Cedrus Lumina Series Button Box")
-    deviceClasses = ["psychopy_cedrus.lumina.LuminaButtonGroup"]
+    deviceClass = "psychopy_cedrus.lumina.LuminaButtonGroup"
 
     def getParams(self):
         return util.getXidButtonBoxParams(key="lumina")

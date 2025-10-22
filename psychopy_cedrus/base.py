@@ -453,8 +453,7 @@ class BaseXidButtonGroup(BaseButtonGroup):
         for profile in cls.parentCls.getAvailableDevices():
             devices.append({
                 'deviceName': profile['deviceName'] + "_buttons",
-                'pad': profile['index'],
-                'channels': 7,
+                'pad': profile['index']
             })
 
         return devices
