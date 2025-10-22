@@ -101,28 +101,14 @@ class StimTrackerButtonBoxBackend(DeviceBackend):
         )
 
 
-class RipondaSoundSensorBackend(DeviceBackend):
-    """
-    Implements StimTracker for the SoundSensor Component
-    """
+# register backends with Components
+VisualValidatorRoutine.registerBackend(StimTrackerLightSensorBackend)
+SoundSensorComponent.registerBackend(StimTrackerSoundSensorBackend)
+AudioValidatorRoutine.registerBackend(StimTrackerSoundSensorBackend)
+ButtonBoxComponent.registerBackend(StimTrackerButtonBoxBackend)
 
-    key = "stimtracker"
-    label = _translate("Cedrus StimTracker")
-    component = SoundSensorComponent
-    deviceClasses = ["psychopy_cedrus.stimtracker.StimTrackerSoundSensorGroup"]
-
-    def getParams(self):
-        return util.getXidSoundSensorParams("stimtracker")
-
-    def addRequirements(self):
-        self.exp.requireImport(
-            importName="stimtracker", importFrom="psychopy_cedrus"
-        )
-
-    def writeDeviceCode(self, buff):
-        return util.writeXidSoundSensorCode(
-            self, 
-            buff, 
-            cls="psychopy_cedrus.stimtracker.StimTrackerSoundSensorGroup",
-            key="stimtracker"
-        )
+# add legacy params
+SoundSensorComponent.legacyParams += util.getXidSoundSensorParams("stimtracker")[1]
+AudioValidatorRoutine.legacyParams += util.getXidSoundSensorParams("stimtracker")[1]
+VisualValidatorRoutine.legacyParams += util.getXidLightSensorParams("stimtracker")[1]
+ButtonBoxComponent.legacyParams += util.getXidButtonBoxParams("stimtracker")[1]

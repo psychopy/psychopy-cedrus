@@ -100,28 +100,14 @@ class RipondaButtonBoxBackend(DeviceBackend):
         )
 
 
-class RipondaSoundSensorBackend(DeviceBackend):
-    """
-    Implements Riponda for the SoundSensor Component
-    """
+# register backends with Components
+VisualValidatorRoutine.registerBackend(RipondaLightSensorBackend)
+AudioValidatorRoutine.registerBackend(RipondaSoundSensorBackend)
+SoundSensorComponent.registerBackend(RipondaSoundSensorBackend)
+ButtonBoxComponent.registerBackend(RipondaButtonBoxBackend)
 
-    key = "riponda"
-    label = _translate("Cedrus Riponda")
-    component = SoundSensorComponent
-    deviceClasses = ['psychopy_cedrus.riponda.RipondaSoundSensorGroup']
-
-    def getParams(self):
-        return util.getXidSoundSensorParams(key="riponda")
-
-    def addRequirements(self):
-        self.exp.requireImport(
-            importName="riponda", importFrom="psychopy_cedrus"
-        )
-
-    def writeDeviceCode(self, buff):
-        return util.writeXidSoundSensorCode(
-            self,
-            buff,
-            cls="psychopy_cedrus.riponda.RipondaSoundSensorGroup",
-            key="riponda"
-        )
+# add legacy params
+SoundSensorComponent.legacyParams += util.getXidSoundSensorParams("riponda")[1]
+AudioValidatorRoutine.legacyParams += util.getXidSoundSensorParams("riponda")[1]
+VisualValidatorRoutine.legacyParams += util.getXidLightSensorParams("riponda")[1]
+ButtonBoxComponent.legacyParams += util.getXidButtonBoxParams("riponda")[1]

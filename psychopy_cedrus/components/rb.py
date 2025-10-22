@@ -101,24 +101,14 @@ class RBButtonBoxBackend(DeviceBackend):
         )
 
 
-class RipondaSoundSensorBackend(DeviceBackend):
-    key = "rb"
-    label = _translate("Cedrus RB Series")
-    component = SoundSensorComponent
-    deviceClasses = ["psychopy_cedrus.rb.RBSoundSensorGroup"]
+# register backends with Components
+VisualValidatorRoutine.registerBackend(RBLightSensorBackend)
+SoundSensorComponent.registerBackend(RBSoundSensorBackend)
+AudioValidatorRoutine.registerBackend(RBSoundSensorBackend)
+ButtonBoxComponent.registerBackend(RBButtonBoxBackend)
 
-    def getParams(self):
-        return util.getXidSoundSensorParams("rb")
-
-    def addRequirements(self):
-        self.exp.requireImport(
-            importName="rb", importFrom="psychopy_cedrus"
-        )
-
-    def writeDeviceCode(self, buff):
-        return util.writeXidLightSensorCode(
-            self,
-            buff,
-            cls="psychopy_cedrus.rb.RBLightSensorGroup",
-            key="rb"
-        )
+# add legacy params
+SoundSensorComponent.legacyParams += util.getXidSoundSensorParams("rb")[1]
+AudioValidatorRoutine.legacyParams += util.getXidSoundSensorParams("rb")[1]
+VisualValidatorRoutine.legacyParams += util.getXidLightSensorParams("rb")[1]
+ButtonBoxComponent.legacyParams += util.getXidButtonBoxParams("rb")[1]

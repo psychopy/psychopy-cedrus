@@ -12,13 +12,12 @@ except ImportError:
 class LuminaButtonBoxBackend(DeviceBackend):
     key = "lumina"
     label = _translate("Cedrus Lumina Series Button Box")
-    component = ButtonBoxComponent
     deviceClasses = ["psychopy_cedrus.lumina.LuminaButtonGroup"]
 
     def getParams(self):
         return util.getXidButtonBoxParams(key="lumina")
 
-    def addRequirements(self: ButtonBoxComponent):
+    def addRequirements(self):
         """
         Add any required module/package imports for this backend
         """
@@ -31,3 +30,10 @@ class LuminaButtonBoxBackend(DeviceBackend):
             cls="psychopy_cedrus.lumina.LuminaButtonGroup",
             key="lumina"
         )
+
+
+# register backends with Components
+ButtonBoxComponent.registerBackend(LuminaButtonBoxBackend)
+
+# add legacy params
+ButtonBoxComponent.legacyParams += util.getXidButtonBoxParams("lumina")[1]
