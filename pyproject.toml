@@ -64,13 +64,9 @@ RBSoundSensorBackend = "psychopy_cedrus.components.rb:RBSoundSensorBackend"
 RipondaSoundSensorBackend = "psychopy_cedrus.components.riponda:RipondaSoundSensorBackend"
 StimTrackerSoundSensorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerSoundSensorBackend"
 # visual validator backends
-RBVisualValidatorBackend = "psychopy_cedrus.components.rb:RBVisualValidatorBackend"
-RipondaVisualValidatorBackend = "psychopy_cedrus.components.riponda:RipondaVisualValidatorBackend"
-StimTrackerVisualValidatorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerVisualValidatorBackend"
-# audio validator backends
-RBAudioValidatorBackend = "psychopy_cedrus.components.rb:RBAudioValidatorBackend"
-RipondaAudioValidatorBackend = "psychopy_cedrus.components.riponda:RipondaAudioValidatorBackend"
-StimTrackerAudioValidatorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerAudioValidatorBackend"
+RBLightSensorBackend = "psychopy_cedrus.components.rb:RBLightSensorBackend"
+RipondaLightSensorBackend = "psychopy_cedrus.components.riponda:RipondaLightSensorBackend"
+StimTrackerLightSensorBackend = "psychopy_cedrus.components.stimtracker:StimTrackerLightSensorBackend"
 
 [project.entry-points."psychopy.hardware.cedrus"]
 # RB series
@@ -83,7 +79,7 @@ RipondaDevice = "psychopy_cedrus.riponda:RipondaDevice"
 RipondaLightSensorGroup = "psychopy_cedrus.riponda:RipondaLightSensorGroup"
 RipondaButtonGroup = "psychopy_cedrus.riponda:RipondaButtonGroup"
 RipondaSoundSensor = "psychopy_cedrus.riponda:RipondaSoundSensorGroup"
-# Riponda series
+# StimTracker series
 StimTrackerDevice = "psychopy_cedrus.stimtracker:StimTrackerDevice"
 StimTrackerLightSensorGroup = "psychopy_cedrus.stimtracker:StimTrackerLightSensorGroup"
 StimTrackerButtonGroup = "psychopy_cedrus.stimtracker:StimTrackerButtonGroup"

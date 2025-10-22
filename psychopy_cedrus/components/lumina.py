@@ -1,7 +1,12 @@
-from psychopy.experiment.components.buttonBox import ButtonBoxComponent
-from psychopy.experiment.plugins import DeviceBackend
+from psychopy.experiment.plugins import PluginDevicesMixin
+from psychopy.experiment.devices import DeviceBackend
 from psychopy.localization import _translate
 from . import util
+
+try:
+    from psychopy.experiment.components.buttonBox import ButtonBoxComponent
+except ImportError:
+    ButtonBoxComponent = PluginDevicesMixin
 
 
 class LuminaButtonBoxBackend(DeviceBackend):

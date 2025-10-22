@@ -1,4 +1,5 @@
-from psychopy.experiment.plugins import DeviceBackend, PluginDevicesMixin
+from psychopy.experiment.plugins import PluginDevicesMixin
+from psychopy.experiment.devices import DeviceBackend
 from psychopy.localization import _translate
 from . import util
 
@@ -21,9 +22,7 @@ except ImportError:
     SoundSensorComponent = PluginDevicesMixin
 
 
-class StimTrackerVisualValidatorBackend(DeviceBackend):
-    # which component is this backend for?
-    component = VisualValidatorRoutine
+class StimTrackerLightSensorBackend(DeviceBackend):
     # what value should Builder use for this backend?
     key = "stimtracker"
     # what label should be displayed by Builder for this backend?
@@ -49,9 +48,7 @@ class StimTrackerVisualValidatorBackend(DeviceBackend):
         )
 
 
-class StimTrackerAudioValidatorBackend(DeviceBackend):
-    # which component is this backend for?
-    component = AudioValidatorRoutine
+class StimTrackerSoundSensorBackend(DeviceBackend):
     # what value should Builder use for this backend?
     key = "stimtracker"
     # what label should be displayed by Builder for this backend?
