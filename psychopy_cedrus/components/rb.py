@@ -1,6 +1,5 @@
-from psychopy.experiment.components.buttonBox import ButtonBoxComponent
-from psychopy.experiment.routines.visualValidator import VisualValidatorRoutine
-from psychopy.experiment.plugins import DeviceBackend, PluginDevicesMixin
+from psychopy.experiment.plugins import PluginDevicesMixin
+from psychopy.experiment.devices import DeviceBackend
 from psychopy.localization import _translate
 from . import util
 
@@ -23,9 +22,7 @@ except ImportError:
     SoundSensorComponent = PluginDevicesMixin
 
 
-class RBVisualValidatorBackend(DeviceBackend):
-    # which component is this backend for?
-    component = VisualValidatorRoutine
+class RBLightSensorBackend(DeviceBackend):
     # what value should Builder use for this backend?
     key = "rb"
     # what label should be displayed by Builder for this backend?
@@ -51,9 +48,7 @@ class RBVisualValidatorBackend(DeviceBackend):
         )
 
 
-class RBAudioValidatorBackend(DeviceBackend):
-    # which component is this backend for?
-    component = AudioValidatorRoutine
+class RBSoundSensorBackend(DeviceBackend):
     # what value should Builder use for this backend?
     key = "rb"
     # what label should be displayed by Builder for this backend?

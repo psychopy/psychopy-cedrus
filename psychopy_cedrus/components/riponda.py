@@ -1,4 +1,5 @@
-from psychopy.experiment.plugins import DeviceBackend, PluginDevicesMixin
+from psychopy.experiment.plugins import PluginDevicesMixin
+from psychopy.experiment.devices import DeviceBackend
 from psychopy.localization import _translate
 from . import util
 
@@ -20,9 +21,8 @@ try:
 except ImportError:
     SoundSensorComponent = PluginDevicesMixin
 
-class RipondaVisualValidatorBackend(DeviceBackend):
-    # which component is this backend for?
-    component = VisualValidatorRoutine
+
+class RipondaLightSensorBackend(DeviceBackend):
     # what value should Builder use for this backend?
     key = "riponda"
     # what label should be displayed by Builder for this backend?
@@ -48,9 +48,7 @@ class RipondaVisualValidatorBackend(DeviceBackend):
         )
 
 
-class RipondaAudioValidatorBackend(DeviceBackend):
-    # which component is this backend for?
-    component = AudioValidatorRoutine
+class RipondaSoundSensorBackend(DeviceBackend):
     # what value should Builder use for this backend?
     key = "riponda"
     # what label should be displayed by Builder for this backend?
