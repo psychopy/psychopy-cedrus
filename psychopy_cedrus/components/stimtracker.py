@@ -27,7 +27,7 @@ class StimTrackerVisualValidatorBackend(DeviceBackend):
     # what value should Builder use for this backend?
     key = "stimtracker"
     # what label should be displayed by Builder for this backend?
-    label = _translate("Cedrus StimTracker")
+    label = _translate("Cedrus StimTracker Light Sensor")
     # what hardware classes are relevant to this backend?
     deviceClasses = ["psychopy_cedrus.stimtracker.StimTrackerLightSensorGroup"]
 
@@ -55,7 +55,7 @@ class StimTrackerAudioValidatorBackend(DeviceBackend):
     # what value should Builder use for this backend?
     key = "stimtracker"
     # what label should be displayed by Builder for this backend?
-    label = _translate("Cedrus StimTracker")
+    label = _translate("Cedrus StimTracker Sound Sensor")
     # what hardware classes are relevant to this backend?
     deviceClasses = ["psychopy_cedrus.stimtracker.StimTrackerSoundSensorGroup"]
 
@@ -83,8 +83,7 @@ class StimTrackerButtonBoxBackend(DeviceBackend):
     other ButtonBoxBackends.
     """
     key = "stimtracker"
-    label = _translate("Cedrus StimTracker")
-    component = ButtonBoxComponent
+    label = _translate("Cedrus StimTracker Button Box")
     deviceClasses = ["psychopy_cedrus.stimtracker.StimTrackerButtonGroup"]
 
     def getParams(self):

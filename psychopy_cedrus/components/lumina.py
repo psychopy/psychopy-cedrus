@@ -6,7 +6,7 @@ from . import util
 
 class LuminaButtonBoxBackend(DeviceBackend):
     key = "lumina"
-    label = _translate("Cedrus Lumina Series")
+    label = _translate("Cedrus Lumina Series Button Box")
     component = ButtonBoxComponent
     deviceClasses = ["psychopy_cedrus.lumina.LuminaButtonGroup"]
 
