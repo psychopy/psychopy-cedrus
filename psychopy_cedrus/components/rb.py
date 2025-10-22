@@ -28,7 +28,7 @@ class RBLightSensorBackend(DeviceBackend):
     # what label should be displayed by Builder for this backend?
     label = _translate("Cedrus RB Series Light Sensor")
     # what hardware classes are relevant to this backend?
-    deviceClasses = ["psychopy_cedrus.rb.RBLightSensorGroup"]
+    deviceClass = "psychopy_cedrus.rb.RBLightSensorGroup"
 
     def getParams(self):
         return util.getXidLightSensorParams(key="rb")
@@ -54,7 +54,7 @@ class RBSoundSensorBackend(DeviceBackend):
     # what label should be displayed by Builder for this backend?
     label = _translate("Cedrus RB Series Sound Sensor")
     # what hardware classes are relevant to this backend?
-    deviceClasses = ["psychopy_cedrus.rb.RBSoundSensorGroup"]
+    deviceClass = "psychopy_cedrus.rb.RBSoundSensorGroup"
 
     def getParams(self):
         return util.getXidSoundSensorParams(key="rb")
@@ -81,7 +81,7 @@ class RBButtonBoxBackend(DeviceBackend):
     """
     key = "rb"
     label = _translate("Cedrus RB Series Button Box")
-    deviceClasses = ["psychopy_cedrus.rb.RBButtonGroup"]
+    deviceClass = "psychopy_cedrus.rb.RBButtonGroup"
 
     def getParams(self):
         return util.getXidButtonBoxParams(key="rb")
