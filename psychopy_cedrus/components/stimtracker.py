@@ -112,3 +112,7 @@ SoundSensorComponent.legacyParams += util.getXidSoundSensorParams("stimtracker")
 AudioValidatorRoutine.legacyParams += util.getXidSoundSensorParams("stimtracker")[1]
 VisualValidatorRoutine.legacyParams += util.getXidLightSensorParams("stimtracker")[1]
 ButtonBoxComponent.legacyParams += util.getXidButtonBoxParams("stimtracker")[1]
+
+# alias legacy class names
+SoundSensorVisualValidatorBackend = SoundSensorLightSensorBackend
+SoundSensorAudioValidatorBackend = SoundSensorSoundSensorBackend
