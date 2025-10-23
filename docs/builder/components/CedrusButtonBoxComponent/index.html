@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Cedrus Button Box Component &#8212; PsychoPy Example Plugin 0.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=536c50fe" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/psychopy.css?v=b9f4e6dd" />
+    <script src="../../../_static/documentation_options.js?v=d20be8f5"></script>
+    <script src="../../../_static/doctools.js?v=b682be12"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/jquery-1.11.0.min.js"></script>
+    <script src="../../../_static/js/jquery-fix.js"></script>
+    <script src="../../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script src="../../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../../genindex/" />
+    <link rel="search" title="Search" href="../../../search/" />
+    <link rel="next" title="RB730" href="../../../coder/RB730/" />
+    <link rel="prev" title="Welcome to psychopy-cedrus’s documentation!" href="../../../" />
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-4089651-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-4089651-2');
+    </script>
+
+    <!-- Matomo -->
+    <script>
+      var _paq = window._paq = window._paq || [];
+      /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+      _paq.push(["setDocumentTitle", document.domain + "/" + document.title]);
+      _paq.push(["setCookieDomain", "*.psychopy.org"]);
+      _paq.push(["setDomains", ["*.psychopy.org","*.discourse.psychopy.org"]]);
+      _paq.push(['trackPageView']);
+      _paq.push(['enableLinkTracking']);
+      (function() {
+        var u="//analytics.opensciencetools.org/";
+        _paq.push(['setTrackerUrl', u+'matomo.php']);
+        _paq.push(['setSiteId', '3']);
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+      })();
+    </script>
+    <noscript><p><img src="//analytics.opensciencetools.org/matomo.php?idsite=3&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+    <!-- End Matomo Code -->
+
+
+  </head><body>
+
+<!-- The social media icon bar -->
+<div class="social-bar">
+  <a href="" class="github">
+    <i class="fab fa-github"></i></a>
+</div>
+
+
+<div id="navbar" class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand small-logo" href="../../../">
+        <img src="../../../_static/Psychopy Plugin Header Small.png" alt="PsychoPy Logo">
+      </a>
+      <a class="navbar-brand large-logo" href="../../../">
+        <img src="../../../_static/Psychopy Plugin Header Large.png" alt="PsychoPy Logo">
+      </a>
+      <!-- <span class="navbar-text navbar-version pull-right"><b></b></span> -->
+    </div>
+
+      <div class="collapse navbar-collapse nav-collapse w-100 pull-right">
+        <ul class="nav navbar-nav ml-auto">
+          <li><a href="../../../">Home</a></li>
+          <li><a href="../../../download/">Install</a></li>
+          
+          <li><a href="https://plugins.psychopy.org/directory.html" class="return-btn">plugins.psychopy.org</a></li>
+          
+            <!-- <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../../">Documentation <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><p class="caption" role="heading"><span class="caption-text">Added content for Builder</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cedrus Button Box Component</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Added content for Coder</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../coder/RB730/">RB730</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coder/Riponda/">Riponda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coder/RipondaButtonGroup/">RipondaButtonGroup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coder/RipondaPhotodiodeGroup/">RipondaLightSensorGroup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../coder/RipondaVoicekey/">RipondaVoicekey</a></li>
+</ul>
+</ul>
+</li> -->
+            
+          
+          <!--  -->
+          
+          
+        </ul>
+
+          <!-- 
+            
+<form class="navbar-form navbar-right" action="../../../search/" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+           -->
+
+      </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9 content">
+      
+  <section id="cedrus-button-box-component">
+<span id="cedrusbuttonbox"></span><h1>Cedrus Button Box Component<a class="headerlink" href="#cedrus-button-box-component" title="Link to this heading">¶</a></h1>
+<p>This component allows you to connect to a Cedrus Button Box to collect key presses.</p>
+<p><em>Note that there is a limitation currently that a button box can only be used in a single Routine. Otherwise |PsychoPy| tries to initialise it twice which raises an error.</em> As a workaround, you need to insert the start-routine and each-frame code from the button box into a code component for a second routine.</p>
+<section id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt>Name<span class="classifier">string</span></dt><dd><p>Everything in a <a href="#id1"><span class="problematic" id="id2">|PsychoPy|</span></a> experiment needs a unique name. The name should contain only letters, numbers and underscores (no punctuation marks or spaces).</p>
+</dd>
+<dt>Start :</dt><dd><p>The time that the button box is first read. See <span class="xref std std-ref">startStop</span> for details.</p>
+</dd>
+<dt>Stop :</dt><dd><p>Governs the duration for which the button box is first read. See <span class="xref std std-ref">startStop</span> for details.</p>
+</dd>
+<dt>Force end of Routine<span class="classifier">true/false</span></dt><dd><p>If this is checked, the first response will end the routine.</p>
+</dd>
+</dl>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Link to this heading">¶</a></h3>
+<p>What information to save, how to lay it out and when to save it.</p>
+<dl class="simple">
+<dt>Allowed keys<span class="classifier">None, or an integer, list, or tuple of integers 0-7</span></dt><dd><p>This field lets you specify which buttons (None, or some or all of 0 through 7) to listen to.</p>
+</dd>
+<dt>Store<span class="classifier">(choice of: first, last, all, nothing)</span></dt><dd><p>Which button events to save in the data file. Events and the response times are saved, with RT being recorded by the button box (not by <a href="#id3"><span class="problematic" id="id4">|PsychoPy|</span></a>).</p>
+</dd>
+<dt>Store correct<span class="classifier">true/false</span></dt><dd><p>If selected, a correctness value will be saved in the data file, based on a match with the given correct answer.</p>
+</dd>
+<dt>Discard previous<span class="classifier">true/false</span></dt><dd><p>If selected, any previous responses will be ignored (typically this is what you want).</p>
+</dd>
+</dl>
+</section>
+<section id="hardware">
+<h3>Hardware<a class="headerlink" href="#hardware" title="Link to this heading">¶</a></h3>
+<p>Parameters for controlling hardware.</p>
+<dl class="simple">
+<dt>Device number: integer</dt><dd><p>This is only needed if you have multiple Cedrus devices connected and you need to specify which to use.</p>
+</dd>
+<dt>Use box timer<span class="classifier">true/false</span></dt><dd><p>Set this to True to use the button box timer for timing information (may give better time resolution)</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p>API reference for <code class="xref py py-class docutils literal notranslate"><span class="pre">iolab</span></code></p>
+</div>
+</section>
+</section>
+</section>
+
+
+      <br/><a href="#" class="pull-right">Back to top</a>
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <span class="pull-right">
+      
+        
+<div id="sourcelink">
+  <a href="https://github.com/psychopy/psychopy/blob/master/docs/source/builder/components/CedrusButtonBoxComponent.rst"
+     rel="nofollow">Source</a>
+</div>
+      <br/>
+
+          &copy; 2002-2018 <a href="https://www.peirce.org.uk/">Jonathan Peirce</a><br/>
+          &copy; 2019 <a href="https://opensciencetools.org/">Open Science Tools Ltd.</a><br/><br/>
+        PsychoPy<sup>®</sup> and Pavlovia<sup>®</sup> are registered trademarks of Open Science Tools Ltd.<br/>
+        Created using <a href="http://sphinx-doc.org/">Sphinx</a> 8.1.3.<br/><br/>
+    </span>
+
+    <a href="http://www.nottingham.ac.uk/"><img src="../../../_static/Nottingham Supported.png", alt="Uni of Nottingham" width=250></a>
+  </div>
+
+</footer>
+  </body>
+</html>
