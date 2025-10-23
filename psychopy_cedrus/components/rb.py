@@ -112,3 +112,7 @@ SoundSensorComponent.legacyParams += util.getXidSoundSensorParams("rb")[1]
 AudioValidatorRoutine.legacyParams += util.getXidSoundSensorParams("rb")[1]
 VisualValidatorRoutine.legacyParams += util.getXidLightSensorParams("rb")[1]
 ButtonBoxComponent.legacyParams += util.getXidButtonBoxParams("rb")[1]
+
+# alias legacy class names
+RBVisualValidatorBackend = RBLightSensorBackend
+RBAudioValidatorBackend = RBSoundSensorBackend

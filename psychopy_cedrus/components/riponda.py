@@ -111,3 +111,7 @@ SoundSensorComponent.legacyParams += util.getXidSoundSensorParams("riponda")[1]
 AudioValidatorRoutine.legacyParams += util.getXidSoundSensorParams("riponda")[1]
 VisualValidatorRoutine.legacyParams += util.getXidLightSensorParams("riponda")[1]
 ButtonBoxComponent.legacyParams += util.getXidButtonBoxParams("riponda")[1]
+
+# alias legacy class names
+RipondaVisualValidatorBackend = RipondaLightSensorBackend
+RipondaAudioValidatorBackend = RipondaSoundSensorBackend
