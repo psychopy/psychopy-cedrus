@@ -74,6 +74,7 @@ class BaseXidDevice(BaseDevice):
         self.messages = {}
         # reset timer
         self.xid.reset_timer()
+        self._deviceZeroTime = self.xid.query_timer()
     
     @classmethod
     def resolve(cls, requested):
@@ -219,7 +220,7 @@ class BaseXidDevice(BaseDevice):
     
     def getTime(self):
         # get from xid
-        self.xid.query_timer()
+        return (self.xid.query_timer() - self._deviceZeroTime) / 1000
     
     def hasUnfinishedMessage(self):
         """
