@@ -73,8 +73,8 @@ class BaseXidDevice(BaseDevice):
         # dict of responses by timestamp
         self.messages = {}
         # reset timer
-        self._lastTimerReset = None
-        self.resetTimer()
+        self.xid.reset_timer()
+        self._deviceZeroTime = self.xid.query_timer()
     
     @classmethod
     def resolve(cls, requested):
@@ -194,7 +194,7 @@ class BaseXidDevice(BaseDevice):
             # get response
             resp = self.xid.get_next_response()
             # get time in s using defaultClock units
-            resp['time'] = float(resp['time']) / 1000 + self._lastTimerReset
+            resp['time'] = float(resp['time']) / 1000
             # store message
             self.messages[resp['time']] = resp
             # choose object to dispatch to
@@ -217,12 +217,10 @@ class BaseXidDevice(BaseDevice):
                 # dispatch to node
                 message = node.parseMessage(resp)
                 node.receiveMessage(message)
-
-    def resetTimer(self, clock=logging.defaultClock):
-        # send reset command
-        self.xid.reset_timer()
-        # store time
-        self._lastTimerReset = clock.getTime(format=float)
+    
+    def getTime(self):
+        # get from xid
+        return (self.xid.query_timer() - self._deviceZeroTime) / 1000
     
     def hasUnfinishedMessage(self):
         """
@@ -251,6 +249,8 @@ class BaseXidLightSensorGroup(BaseLightSensorGroup):
         self.parent.nodes.append(self)
         # Xid lightsensor should be key 3, but this attribute can be changed if needed
         self.keys = [3]
+        # adjustment to apply to incoming time values from the device
+        self._timeAdjust = 0
         # initialise base class
         BaseLightSensorGroup.__init__(self, channels=channels)
 
@@ -312,7 +312,8 @@ class BaseXidLightSensorGroup(BaseLightSensorGroup):
         return self.getState(channel)
 
     def resetTimer(self, clock=logging.defaultClock):
-        self.parent.resetTimer(clock=clock)
+        # set the time adjust to be the difference between the target clock and the device clock
+        self._timeAdjust = clock.getTime() - self.parent.getTime()
 
     def dispatchMessages(self):
         """
@@ -332,7 +333,9 @@ class BaseXidLightSensorGroup(BaseLightSensorGroup):
             channel = self.keys.index(message['key'])
         # create LightSensorResponse object
         resp = LightSensorResponse(
-            t=message['time'], channel=channel, value=message['pressed'], 
+            t=message['time'] + self._timeAdjust, 
+            channel=channel, 
+            value=message['pressed'], 
             threshold=self.getThreshold(channel)
         )
 
@@ -376,6 +379,8 @@ class BaseXidButtonGroup(BaseButtonGroup):
         self.parent.nodes.append(self)
         # set bounce interval
         self.setBounce(bounce)
+        # adjustment to apply to incoming time values from the device
+        self._timeAdjust = 0
         # initialise base class
         BaseButtonGroup.__init__(self, channels=channels)
 
@@ -418,7 +423,9 @@ class BaseXidButtonGroup(BaseButtonGroup):
 
     def parseMessage(self, message):
         resp = ButtonResponse(
-            t=message['time'], channel=message['key'], value=message['pressed']
+            t=message['time'] + self._timeAdjust, 
+            channel=message['key'], 
+            value=message['pressed']
         )
 
         return resp
@@ -444,7 +451,8 @@ class BaseXidButtonGroup(BaseButtonGroup):
         return self.xid.get_signal_filter(self.selectors[0]) / 1000
 
     def resetTimer(self, clock=logging.defaultClock):
-        self.parent.resetTimer(clock=clock)
+        # set the time adjust to be the difference between the target clock and the device clock
+        self._timeAdjust = clock.getTime() - self.parent.getTime()
 
     @classmethod
     def getAvailableDevices(cls):
@@ -478,6 +486,8 @@ class BaseXidSoundSensorGroup(BaseSoundSensorGroup):
         self.parent.nodes.append(self)
         # BaseXid voicekey should be key 2, but this attribute can be changed if needed
         self.keys = [2]
+        # adjustment to apply to incoming time values from the device
+        self._timeAdjust = 0
         # initialise base class
         BaseSoundSensorGroup.__init__(self, channels=channels, threshold=threshold)
     
@@ -488,14 +498,18 @@ class BaseXidSoundSensorGroup(BaseSoundSensorGroup):
             channel = self.keys.index(message['key'])
         # create voicekey resp
         resp = SoundSensorResponse(
-            t=message['time'], channel=message['key']-1, value=message['pressed'], 
-            threshold=self.getThreshold(channel), device=self
+            t=message['time'] + self._timeAdjust, 
+            channel=message['key']-1, 
+            value=message['pressed'], 
+            threshold=self.getThreshold(channel), 
+            device=self
         )
 
         return resp
 
     def resetTimer(self, clock=logging.defaultClock):
-        self.parent.resetTimer(clock=clock)
+        # set the time adjust to be the difference between the target clock and the device clock
+        self._timeAdjust = clock.getTime() - self.parent.getTime()
     
     def _setThreshold(self, threshold, channel=None):
         if threshold is None:
