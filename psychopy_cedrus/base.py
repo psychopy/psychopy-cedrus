@@ -299,7 +299,7 @@ class BaseXidLightSensorGroup(BaseLightSensorGroup):
         # store value
         self._threshold = threshold
         # convert from base 16 integer to ASCII character
-        thr = chr(int(threshold * 100))
+        thr = chr(100 - int(threshold * 100))
         # get channel selector
         selector = self.selectors[channel]
         # send command
