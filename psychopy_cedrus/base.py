@@ -287,6 +287,7 @@ class BaseXidLightSensorGroup(BaseLightSensorGroup):
         for profile in cls.parentCls.getAvailableDevices():
             devices.append({
                 'deviceName': profile['deviceName'] + "_lightsensors",
+                'deviceClass': f"{cls.__module__}.{cls.__qualname__}",
                 'pad': profile['index'],
                 'channels': 1,
             })

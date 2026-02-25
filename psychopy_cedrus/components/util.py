@@ -47,7 +47,7 @@ def writeXidButtonBoxCode(self, buff, cls, key):
     code = (
         f"deviceManager.addDevice(\n"
         f"    deviceClass='{cls}',\n"
-        f"    deviceName=%(deviceLabel)s,\n"
+        f"    deviceName=%(name)s,\n"
         f"    pad=%({key}Index)s,\n"
         f"    channels=%({key}NButtons)s,\n"
         f")\n"
@@ -85,11 +85,14 @@ def getXidLightSensorParams(key):
 def writeXidLightSensorCode(self, buff, cls, key):
     # get inits
     inits = getInitVals(self.params)
+    # use deviceLabel for name if not present
+    if "name" not in inits and "deviceLabel" in inits:
+        inits['name'] = inits.pop("deviceLabel")
     # make ButtonGroup object
     code = (
         f"deviceManager.addDevice(\n"
         f"    deviceClass='{cls}',\n"
-        f"    deviceName=%(deviceLabel)s,\n"
+        f"    deviceName=%(name)s,\n"
         f"    pad=%({key}DeviceNo)s,\n"
         f"    channels=%({key}NChannels)s,\n"
         f")\n"
@@ -138,7 +141,7 @@ def writeXidSoundSensorCode(self, buff, cls, key):
     code = (
         f"deviceManager.addDevice(\n"
         f"    deviceClass='{cls}',\n"
-        f"    deviceName=%(deviceLabel)s,\n"
+        f"    deviceName=%(name)s,\n"
         f"    pad=%({key}Index)s,\n"
         f"    channels=%({key}Channels)s,\n"
         f"    threshold=%({key}Threshold)s,\n"
