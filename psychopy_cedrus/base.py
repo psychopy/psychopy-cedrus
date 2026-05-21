@@ -492,6 +492,17 @@ class BaseXidSoundSensorGroup(BaseSoundSensorGroup):
         # initialise base class
         BaseSoundSensorGroup.__init__(self, channels=channels, threshold=threshold)
     
+    def dispatchMessages(self):
+        """
+        Dispatch messages from parent BaseXid to this button group
+
+        Returns
+        -------
+        bool
+            True if request sent successfully
+        """
+        self.parent.dispatchMessages()
+    
     def parseMessage(self, message):
         # work out channel from key
         channel = 0
