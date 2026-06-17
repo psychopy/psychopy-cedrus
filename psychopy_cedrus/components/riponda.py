@@ -75,7 +75,7 @@ if Version(ppyVersion) >= Version("2025.1.0"):
         key = "riponda"
         label = _translate("Cedrus Riponda")
         component = VoiceKeyComponent
-        deviceClasses = ['psychopy.hardware.voicekey.MicrophoneVoiceKeyEmulator']
+        deviceClasses = ['psychopy_cedrus.riponda.RipondaVoiceKeyGroup']
 
         def getParams(self: VoiceKeyComponent):
             # define order
@@ -129,3 +129,4 @@ if Version(ppyVersion) >= Version("2025.1.0"):
                 "    threshold=%(ripondaThreshold)s,\n"
                 ")\n"
             )
+            buff.writeIndentedLines(code % inits)
