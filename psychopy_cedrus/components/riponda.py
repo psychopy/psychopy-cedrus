@@ -26,7 +26,7 @@ class RipondaLightSensorBackend(DeviceBackend):
     # what value should Builder use for this backend?
     key = "riponda"
     # what label should be displayed by Builder for this backend?
-    label = _translate("Cedrus Riponda Light Sensor")
+    backendLabel = _translate("Cedrus Riponda Light Sensor")
     # what hardware classes are relevant to this backend?
     deviceClass = "psychopy_cedrus.riponda.RipondaLightSensorGroup"
 
@@ -52,7 +52,7 @@ class RipondaSoundSensorBackend(DeviceBackend):
     # what value should Builder use for this backend?
     key = "riponda"
     # what label should be displayed by Builder for this backend?
-    label = _translate("Cedrus Riponda Sound Sensor")
+    backendLabel = _translate("Cedrus Riponda Sound Sensor")
     # what hardware classes are relevant to this backend?
     deviceClass = "psychopy_cedrus.riponda.RipondaSoundSensorGroup"
 
@@ -79,7 +79,7 @@ class RipondaButtonBoxBackend(DeviceBackend):
     Adds support for the Cedrus Riponda button box.
     """
     key = "riponda"
-    label = _translate("Cedrus Riponda Button Box")
+    backendLabel = _translate("Cedrus Riponda Button Box")
     deviceClass = "psychopy_cedrus.riponda.RipondaButtonGroup"
 
     def getParams(self):
