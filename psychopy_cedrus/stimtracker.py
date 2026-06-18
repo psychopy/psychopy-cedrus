@@ -45,9 +45,9 @@ class StimTrackerVoiceKeyGroup(BaseXidVoiceKeyGroup):
     parentCls = StimTrackerDevice
     
     def __init__(
-        self, index=0, channels=3, threshold=None, enableResponses=True
+        self, pad=0, channels=3, threshold=None, enableResponses=True
     ):
         # initialise
-        BaseXidDevice.__init__(
-            self, index=index, channels=channels, threshold=threshold
+        BaseXidVoiceKeyGroup.__init__(
+            self, pad=pad, channels=channels, threshold=threshold
         )
