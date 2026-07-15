@@ -473,6 +473,9 @@ class BaseXidVoiceKeyGroup(BaseVoiceKeyGroup):
         self.keys = [2]
         # initialise base class
         BaseVoiceKeyGroup.__init__(self, channels=channels, threshold=threshold)
+
+    def dispatchMessages(self):
+        self.parent.dispatchMessages()
     
     def parseMessage(self, message):
         # work out channel from key
