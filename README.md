@@ -6,7 +6,10 @@ Extension package for PsychoPy which adds support for various hardware devices b
 
 Installing this package alongside PsychoPy will enable support for the following devices:
 
-* RB730 Response Pads
+* Riponda
+* Lumina
+* RB730
+* StimTracker
     
 ## Installing
 
