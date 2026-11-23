@@ -135,7 +135,7 @@ class BaseXidDevice(BaseDevice):
         if isinstance(other, type(self)):
             # if given another object, get index
             index = other.index
-        elif isinstance(other, (BaseXidButtonGroup, BaseXidLightSensorGroup, BaseXidLightSensorGroup)):
+        elif isinstance(other, (BaseXidButtonGroup, BaseXidLightSensorGroup, BaseXidSoundSensorGroup)):
             # if given a child object, get its parent's index
             index = other.parent.index
         elif isinstance(other, dict) and "index" in other:
@@ -505,13 +505,19 @@ class BaseXidSoundSensorGroup(BaseSoundSensorGroup):
     
     def parseMessage(self, message):
         # work out channel from key
-        channel = 0
-        if message['key'] in self.keys:
+        if isinstance(message['port'], bytes):
+            # StimTracker packets name the port by selector, so keep the original key-based channel
+            channel = message['key'] - 1
+        elif message['key'] in self.keys:
+            # other devices report the voice key on port 2 by its key number, so the channel is
+            # that key's position in self.keys (key 2 is channel 0)
             channel = self.keys.index(message['key'])
+        else:
+            channel = 0
         # create voicekey resp
         resp = SoundSensorResponse(
-            t=message['time'] + self._timeAdjust, 
-            channel=message['key']-1, 
+            t=message['time'] + self._timeAdjust,
+            channel=channel,
             value=message['pressed'], 
             threshold=self.getThreshold(channel), 
             device=self
