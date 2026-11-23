@@ -107,7 +107,7 @@ def addDevices(device, *kinds):
         for kind in kinds
     ]
 
-``
+
 def test_voicekey_channel(device):
     """
     The voice key is the only channel in its group, so its responses should be on channel 0.
